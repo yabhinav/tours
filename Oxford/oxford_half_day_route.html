@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_202cc74a5113ce73b10c0ac9e6b7184b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_202cc74a5113ce73b10c0ac9e6b7184b" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_202cc74a5113ce73b10c0ac9e6b7184b = L.map(
+                "map_202cc74a5113ce73b10c0ac9e6b7184b",
+                {
+                    center: [51.754816, -1.254367],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f3c719b619420ff960b3f4d180bfff0f = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+    
+            var marker_ca17c7e63957882add2f327642eeeff7 = L.marker(
+                [51.753539, -1.262179],
+                {}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+    
+        var popup_87cd56d2c84c314894231d1f270c93bd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_150114f618ac1f4df78604937e863f9c = $(`<div id="html_150114f618ac1f4df78604937e863f9c" style="width: 100.0%; height: 100.0%;">Gloucester Green Bus Station</div>`)[0];
+            popup_87cd56d2c84c314894231d1f270c93bd.setContent(html_150114f618ac1f4df78604937e863f9c);
+        
+
+        marker_ca17c7e63957882add2f327642eeeff7.bindPopup(popup_87cd56d2c84c314894231d1f270c93bd)
+        ;
+
+        
+    
+    
+            marker_ca17c7e63957882add2f327642eeeff7.bindTooltip(
+                `<div>
+                     Gloucester Green Bus Station
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_f5d66677d164363c67857ca635e9589d = L.marker(
+                [51.755529, -1.260393],
+                {}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+    
+        var popup_0a38035ae44cf69197045bc1c78c275b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_039f8743852210bbe5234f36ae8350df = $(`<div id="html_039f8743852210bbe5234f36ae8350df" style="width: 100.0%; height: 100.0%;">Ashmolean Museum</div>`)[0];
+            popup_0a38035ae44cf69197045bc1c78c275b.setContent(html_039f8743852210bbe5234f36ae8350df);
+        
+
+        marker_f5d66677d164363c67857ca635e9589d.bindPopup(popup_0a38035ae44cf69197045bc1c78c275b)
+        ;
+
+        
+    
+    
+            marker_f5d66677d164363c67857ca635e9589d.bindTooltip(
+                `<div>
+                     Ashmolean Museum
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7890b877dd9ad4cc704463117d3e7222 = L.marker(
+                [51.751938, -1.257844],
+                {}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+    
+        var popup_9001bd22134bb45d9b954137c3e78d44 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0d92b4c2aae0dfb6a8f91ed7ec5626dc = $(`<div id="html_0d92b4c2aae0dfb6a8f91ed7ec5626dc" style="width: 100.0%; height: 100.0%;">Modern Art Oxford</div>`)[0];
+            popup_9001bd22134bb45d9b954137c3e78d44.setContent(html_0d92b4c2aae0dfb6a8f91ed7ec5626dc);
+        
+
+        marker_7890b877dd9ad4cc704463117d3e7222.bindPopup(popup_9001bd22134bb45d9b954137c3e78d44)
+        ;
+
+        
+    
+    
+            marker_7890b877dd9ad4cc704463117d3e7222.bindTooltip(
+                `<div>
+                     Modern Art Oxford
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_854f7b9d492c84fc4adab7042c84d25e = L.marker(
+                [51.752723, -1.247567],
+                {}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+    
+        var popup_151d7a2fc1f079942210af6cb95f45b2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d4360ee64f04a6bae8f3a00ccf24da53 = $(`<div id="html_d4360ee64f04a6bae8f3a00ccf24da53" style="width: 100.0%; height: 100.0%;">University Botanic Garden</div>`)[0];
+            popup_151d7a2fc1f079942210af6cb95f45b2.setContent(html_d4360ee64f04a6bae8f3a00ccf24da53);
+        
+
+        marker_854f7b9d492c84fc4adab7042c84d25e.bindPopup(popup_151d7a2fc1f079942210af6cb95f45b2)
+        ;
+
+        
+    
+    
+            marker_854f7b9d492c84fc4adab7042c84d25e.bindTooltip(
+                `<div>
+                     University Botanic Garden
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_56f23756e2801e6d6fd8c5c44cfd16c4 = L.marker(
+                [51.75064, -1.256022],
+                {}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+    
+        var popup_c4ede6de5d64df64106599d5789f4b5d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0f35915eda7851cff13f90e432d27dc0 = $(`<div id="html_0f35915eda7851cff13f90e432d27dc0" style="width: 100.0%; height: 100.0%;">Christ Church Meadow</div>`)[0];
+            popup_c4ede6de5d64df64106599d5789f4b5d.setContent(html_0f35915eda7851cff13f90e432d27dc0);
+        
+
+        marker_56f23756e2801e6d6fd8c5c44cfd16c4.bindPopup(popup_c4ede6de5d64df64106599d5789f4b5d)
+        ;
+
+        
+    
+    
+            marker_56f23756e2801e6d6fd8c5c44cfd16c4.bindTooltip(
+                `<div>
+                     Christ Church Meadow
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_cf356cd0713e72e5daf486e12d62b656 = L.marker(
+                [51.750873, -1.256703],
+                {}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+    
+        var popup_3545c47bbbfe1193bf734bd577e2441f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4b48a1638b5e54b1025c5db8a2745aa9 = $(`<div id="html_4b48a1638b5e54b1025c5db8a2745aa9" style="width: 100.0%; height: 100.0%;">Christ Church Picture Gallery</div>`)[0];
+            popup_3545c47bbbfe1193bf734bd577e2441f.setContent(html_4b48a1638b5e54b1025c5db8a2745aa9);
+        
+
+        marker_cf356cd0713e72e5daf486e12d62b656.bindPopup(popup_3545c47bbbfe1193bf734bd577e2441f)
+        ;
+
+        
+    
+    
+            marker_cf356cd0713e72e5daf486e12d62b656.bindTooltip(
+                `<div>
+                     Christ Church Picture Gallery
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_5ecf6746b5084e3faf6209168f3f3bca = L.polyline(
+                [[51.753539, -1.262179], [51.755529, -1.260393], [51.751938, -1.257844], [51.752723, -1.247567], [51.75064, -1.256022]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_202cc74a5113ce73b10c0ac9e6b7184b);
+        
+</script>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e7ca6eb8bee0ea0587bf338e0308f5ce {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_e7ca6eb8bee0ea0587bf338e0308f5ce" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_e7ca6eb8bee0ea0587bf338e0308f5ce = L.map(
+                "map_e7ca6eb8bee0ea0587bf338e0308f5ce",
+                {
+                    center: [51.753, -1.257],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 16,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f8d8ef0c6334bd98cedeefe76b27a018 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var marker_6c919d124c2cc3cfc65d425f4b94ead3 = L.marker(
+                [51.7555, -1.2604],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_1ef1d7256cade1b53529f9276879bee8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_6c919d124c2cc3cfc65d425f4b94ead3.setIcon(icon_1ef1d7256cade1b53529f9276879bee8);
+        
+    
+        var popup_42f97f66f5335f7c35becc63d8dd5985 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b4383a3dca505652b47cf8f37f3d388c = $(`<div id="html_b4383a3dca505652b47cf8f37f3d388c" style="width: 100.0%; height: 100.0%;">Ashmolean Museum</div>`)[0];
+            popup_42f97f66f5335f7c35becc63d8dd5985.setContent(html_b4383a3dca505652b47cf8f37f3d388c);
+        
+
+        marker_6c919d124c2cc3cfc65d425f4b94ead3.bindPopup(popup_42f97f66f5335f7c35becc63d8dd5985)
+        ;
+
+        
+    
+    
+            marker_6c919d124c2cc3cfc65d425f4b94ead3.bindTooltip(
+                `<div>
+                     Ashmolean Museum
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_34cbf1f2be16410628a0cfe5af0553cc = L.marker(
+                [51.7566, -1.2605],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_0dbe4dfcae7afbec1ef11f1158fb4146 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_34cbf1f2be16410628a0cfe5af0553cc.setIcon(icon_0dbe4dfcae7afbec1ef11f1158fb4146);
+        
+    
+        var popup_339e32a414cf8b6b36c1c6a5878550f3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_82895dac87a43e1ede9fc32607ef8bda = $(`<div id="html_82895dac87a43e1ede9fc32607ef8bda" style="width: 100.0%; height: 100.0%;">St John's College</div>`)[0];
+            popup_339e32a414cf8b6b36c1c6a5878550f3.setContent(html_82895dac87a43e1ede9fc32607ef8bda);
+        
+
+        marker_34cbf1f2be16410628a0cfe5af0553cc.bindPopup(popup_339e32a414cf8b6b36c1c6a5878550f3)
+        ;
+
+        
+    
+    
+            marker_34cbf1f2be16410628a0cfe5af0553cc.bindTooltip(
+                `<div>
+                     St John's College
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c26583b6d59f36fd6cdaea0d0d2aa04f = L.marker(
+                [51.7558, -1.259],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_43185321bd265764b277cb02f4cad34f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_c26583b6d59f36fd6cdaea0d0d2aa04f.setIcon(icon_43185321bd265764b277cb02f4cad34f);
+        
+    
+        var popup_22a28b4505ed37341350e77366ae60d1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fe67859f0d6fdac1da21e9f0e95aa5fd = $(`<div id="html_fe67859f0d6fdac1da21e9f0e95aa5fd" style="width: 100.0%; height: 100.0%;">Balliol College</div>`)[0];
+            popup_22a28b4505ed37341350e77366ae60d1.setContent(html_fe67859f0d6fdac1da21e9f0e95aa5fd);
+        
+
+        marker_c26583b6d59f36fd6cdaea0d0d2aa04f.bindPopup(popup_22a28b4505ed37341350e77366ae60d1)
+        ;
+
+        
+    
+    
+            marker_c26583b6d59f36fd6cdaea0d0d2aa04f.bindTooltip(
+                `<div>
+                     Balliol College
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_42b9fc0a417b4c42f6103d3e4df8af89 = L.marker(
+                [51.7553, -1.2579],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_4a364a82a92b7c1770b035e84fd8a274 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_42b9fc0a417b4c42f6103d3e4df8af89.setIcon(icon_4a364a82a92b7c1770b035e84fd8a274);
+        
+    
+        var popup_f7f57a70021c65a754fb2ee65b7ab269 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d8d5c237e90091045feb067aca2ffd17 = $(`<div id="html_d8d5c237e90091045feb067aca2ffd17" style="width: 100.0%; height: 100.0%;">Trinity College</div>`)[0];
+            popup_f7f57a70021c65a754fb2ee65b7ab269.setContent(html_d8d5c237e90091045feb067aca2ffd17);
+        
+
+        marker_42b9fc0a417b4c42f6103d3e4df8af89.bindPopup(popup_f7f57a70021c65a754fb2ee65b7ab269)
+        ;
+
+        
+    
+    
+            marker_42b9fc0a417b4c42f6103d3e4df8af89.bindTooltip(
+                `<div>
+                     Trinity College
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_d72f7f82cb6ce185333140bf7611b8d4 = L.marker(
+                [51.7541, -1.254],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_dd3e2ae975f68f567525f9eba2dee578 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_d72f7f82cb6ce185333140bf7611b8d4.setIcon(icon_dd3e2ae975f68f567525f9eba2dee578);
+        
+    
+        var popup_b203189f729e4c4283726d36980a076b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d3845ce08faedbf9a93b78a1ba6ec04c = $(`<div id="html_d3845ce08faedbf9a93b78a1ba6ec04c" style="width: 100.0%; height: 100.0%;">Bodleian Library</div>`)[0];
+            popup_b203189f729e4c4283726d36980a076b.setContent(html_d3845ce08faedbf9a93b78a1ba6ec04c);
+        
+
+        marker_d72f7f82cb6ce185333140bf7611b8d4.bindPopup(popup_b203189f729e4c4283726d36980a076b)
+        ;
+
+        
+    
+    
+            marker_d72f7f82cb6ce185333140bf7611b8d4.bindTooltip(
+                `<div>
+                     Bodleian Library
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3983b0d65206addf3bbbacc1ab36fc15 = L.marker(
+                [51.7534, -1.253],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_b3209ce2099169d491c5e03fa4cae003 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_3983b0d65206addf3bbbacc1ab36fc15.setIcon(icon_b3209ce2099169d491c5e03fa4cae003);
+        
+    
+        var popup_6d8e3b5a06464ed3dc5fb228019ae8d5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ad1f53350c12ce738dfe6f306ed1c0ee = $(`<div id="html_ad1f53350c12ce738dfe6f306ed1c0ee" style="width: 100.0%; height: 100.0%;">Radcliffe Camera</div>`)[0];
+            popup_6d8e3b5a06464ed3dc5fb228019ae8d5.setContent(html_ad1f53350c12ce738dfe6f306ed1c0ee);
+        
+
+        marker_3983b0d65206addf3bbbacc1ab36fc15.bindPopup(popup_6d8e3b5a06464ed3dc5fb228019ae8d5)
+        ;
+
+        
+    
+    
+            marker_3983b0d65206addf3bbbacc1ab36fc15.bindTooltip(
+                `<div>
+                     Radcliffe Camera
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_969fce0be02083ec40f451ea03fedd04 = L.marker(
+                [51.7526, -1.2534],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_8dfbbcbac0271a4efc428019f649043e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_969fce0be02083ec40f451ea03fedd04.setIcon(icon_8dfbbcbac0271a4efc428019f649043e);
+        
+    
+        var popup_0c153a1ddd978dc0136493c429bdb83b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4f95065c26fb2d4fd276d68be4f0cf5d = $(`<div id="html_4f95065c26fb2d4fd276d68be4f0cf5d" style="width: 100.0%; height: 100.0%;">University Church of St Mary the Virgin</div>`)[0];
+            popup_0c153a1ddd978dc0136493c429bdb83b.setContent(html_4f95065c26fb2d4fd276d68be4f0cf5d);
+        
+
+        marker_969fce0be02083ec40f451ea03fedd04.bindPopup(popup_0c153a1ddd978dc0136493c429bdb83b)
+        ;
+
+        
+    
+    
+            marker_969fce0be02083ec40f451ea03fedd04.bindTooltip(
+                `<div>
+                     University Church of St Mary the Virgin
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_1aeb95f791b5c6845f7ec68672cb0165 = L.marker(
+                [51.7523, -1.2515],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_8a9f095657d10e5362e365e509ff0170 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_1aeb95f791b5c6845f7ec68672cb0165.setIcon(icon_8a9f095657d10e5362e365e509ff0170);
+        
+    
+        var popup_27380a86ed69149411872f56b6214461 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_13c377e1ee78f59b78ed71b91424935b = $(`<div id="html_13c377e1ee78f59b78ed71b91424935b" style="width: 100.0%; height: 100.0%;">The Queen's College</div>`)[0];
+            popup_27380a86ed69149411872f56b6214461.setContent(html_13c377e1ee78f59b78ed71b91424935b);
+        
+
+        marker_1aeb95f791b5c6845f7ec68672cb0165.bindPopup(popup_27380a86ed69149411872f56b6214461)
+        ;
+
+        
+    
+    
+            marker_1aeb95f791b5c6845f7ec68672cb0165.bindTooltip(
+                `<div>
+                     The Queen's College
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_20ef9ccb659064da9637d56b9508d512 = L.marker(
+                [51.7528, -1.247],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_ec1f0a40d33f4f7f323df627f8541ee7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_20ef9ccb659064da9637d56b9508d512.setIcon(icon_ec1f0a40d33f4f7f323df627f8541ee7);
+        
+    
+        var popup_2f901b9808ecae8f2462dbff75ff19c3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_eb0ac27e6a1c07c1f7af76ce44cc0d03 = $(`<div id="html_eb0ac27e6a1c07c1f7af76ce44cc0d03" style="width: 100.0%; height: 100.0%;">Magdalen College</div>`)[0];
+            popup_2f901b9808ecae8f2462dbff75ff19c3.setContent(html_eb0ac27e6a1c07c1f7af76ce44cc0d03);
+        
+
+        marker_20ef9ccb659064da9637d56b9508d512.bindPopup(popup_2f901b9808ecae8f2462dbff75ff19c3)
+        ;
+
+        
+    
+    
+            marker_20ef9ccb659064da9637d56b9508d512.bindTooltip(
+                `<div>
+                     Magdalen College
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9b55ce34e1d9f13d3b9726be534cabd1 = L.marker(
+                [51.7527, -1.2453],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_ee52af2959dbc871170d989fd478fab1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_9b55ce34e1d9f13d3b9726be534cabd1.setIcon(icon_ee52af2959dbc871170d989fd478fab1);
+        
+    
+        var popup_b4e210a70797b5f1ba987037c6fc79fa = L.popup({"maxWidth": "100%"});
+
+        
+            var html_12470b9077cc4cf4fb17e742b2164d3d = $(`<div id="html_12470b9077cc4cf4fb17e742b2164d3d" style="width: 100.0%; height: 100.0%;">Oxford Botanic Garden</div>`)[0];
+            popup_b4e210a70797b5f1ba987037c6fc79fa.setContent(html_12470b9077cc4cf4fb17e742b2164d3d);
+        
+
+        marker_9b55ce34e1d9f13d3b9726be534cabd1.bindPopup(popup_b4e210a70797b5f1ba987037c6fc79fa)
+        ;
+
+        
+    
+    
+            marker_9b55ce34e1d9f13d3b9726be534cabd1.bindTooltip(
+                `<div>
+                     Oxford Botanic Garden
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_51445b17c3af1c8d694b119940244c55 = L.marker(
+                [51.7506, -1.256],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_fbc375e14d100a03969f4a948236e846 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_51445b17c3af1c8d694b119940244c55.setIcon(icon_fbc375e14d100a03969f4a948236e846);
+        
+    
+        var popup_85dccc2c86fc325f32fb81395f557970 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_629fe2e04ef94353c8688048cdabee89 = $(`<div id="html_629fe2e04ef94353c8688048cdabee89" style="width: 100.0%; height: 100.0%;">Christ Church Meadow</div>`)[0];
+            popup_85dccc2c86fc325f32fb81395f557970.setContent(html_629fe2e04ef94353c8688048cdabee89);
+        
+
+        marker_51445b17c3af1c8d694b119940244c55.bindPopup(popup_85dccc2c86fc325f32fb81395f557970)
+        ;
+
+        
+    
+    
+            marker_51445b17c3af1c8d694b119940244c55.bindTooltip(
+                `<div>
+                     Christ Church Meadow
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9d6b09f8aaed8814759df5f6a8e35d94 = L.marker(
+                [51.7503, -1.2567],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_d5c22b179775b5f17a1442a76a5a40bd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_9d6b09f8aaed8814759df5f6a8e35d94.setIcon(icon_d5c22b179775b5f17a1442a76a5a40bd);
+        
+    
+        var popup_255ccb886b4e55a888b6d59e611a8976 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a085a9dc81151c1970423ef31ea5f500 = $(`<div id="html_a085a9dc81151c1970423ef31ea5f500" style="width: 100.0%; height: 100.0%;">Christ Church Cathedral</div>`)[0];
+            popup_255ccb886b4e55a888b6d59e611a8976.setContent(html_a085a9dc81151c1970423ef31ea5f500);
+        
+
+        marker_9d6b09f8aaed8814759df5f6a8e35d94.bindPopup(popup_255ccb886b4e55a888b6d59e611a8976)
+        ;
+
+        
+    
+    
+            marker_9d6b09f8aaed8814759df5f6a8e35d94.bindTooltip(
+                `<div>
+                     Christ Church Cathedral
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_fc2b13538ca3f01253cf2ba7a48d030d = L.marker(
+                [51.7518, -1.2596],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_275444a74d504b3c4a481b0487572a4c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_fc2b13538ca3f01253cf2ba7a48d030d.setIcon(icon_275444a74d504b3c4a481b0487572a4c);
+        
+    
+        var popup_1ef8963cf2e17f74e6a541c46626808c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_140a80b65ef09f6a0ba4800c9dba1fa0 = $(`<div id="html_140a80b65ef09f6a0ba4800c9dba1fa0" style="width: 100.0%; height: 100.0%;">Carfax Tower</div>`)[0];
+            popup_1ef8963cf2e17f74e6a541c46626808c.setContent(html_140a80b65ef09f6a0ba4800c9dba1fa0);
+        
+
+        marker_fc2b13538ca3f01253cf2ba7a48d030d.bindPopup(popup_1ef8963cf2e17f74e6a541c46626808c)
+        ;
+
+        
+    
+    
+            marker_fc2b13538ca3f01253cf2ba7a48d030d.bindTooltip(
+                `<div>
+                     Carfax Tower
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c4d3c6c21594e8ec333544d0bacea998 = L.marker(
+                [51.7522, -1.2559],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_82dfbe24d3934e2ccc3d508e76ab5678 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_c4d3c6c21594e8ec333544d0bacea998.setIcon(icon_82dfbe24d3934e2ccc3d508e76ab5678);
+        
+    
+        var popup_8cb62ebe8cabe755727e71b764ac4bfe = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7893e21e132c444cdfbe236cab00bf94 = $(`<div id="html_7893e21e132c444cdfbe236cab00bf94" style="width: 100.0%; height: 100.0%;">Covered Market</div>`)[0];
+            popup_8cb62ebe8cabe755727e71b764ac4bfe.setContent(html_7893e21e132c444cdfbe236cab00bf94);
+        
+
+        marker_c4d3c6c21594e8ec333544d0bacea998.bindPopup(popup_8cb62ebe8cabe755727e71b764ac4bfe)
+        ;
+
+        
+    
+    
+            marker_c4d3c6c21594e8ec333544d0bacea998.bindTooltip(
+                `<div>
+                     Covered Market
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_189eb3d3a3208ff1cacbb36aa8627a4f = L.marker(
+                [51.753, -1.2547],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_d7fd66e5aa1376700c4b5304f07bdee1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_189eb3d3a3208ff1cacbb36aa8627a4f.setIcon(icon_d7fd66e5aa1376700c4b5304f07bdee1);
+        
+    
+        var popup_e47979d8a89fda51551815ce6be78808 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_270c4a37682f6936012b49d286d5c777 = $(`<div id="html_270c4a37682f6936012b49d286d5c777" style="width: 100.0%; height: 100.0%;">Brasenose College</div>`)[0];
+            popup_e47979d8a89fda51551815ce6be78808.setContent(html_270c4a37682f6936012b49d286d5c777);
+        
+
+        marker_189eb3d3a3208ff1cacbb36aa8627a4f.bindPopup(popup_e47979d8a89fda51551815ce6be78808)
+        ;
+
+        
+    
+    
+            marker_189eb3d3a3208ff1cacbb36aa8627a4f.bindTooltip(
+                `<div>
+                     Brasenose College
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ad4cdee9ccc98a7799df1153bd37c7c8 = L.marker(
+                [51.7547, -1.251],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_7d5555d1eca243bb43f055f23d84227f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_ad4cdee9ccc98a7799df1153bd37c7c8.setIcon(icon_7d5555d1eca243bb43f055f23d84227f);
+        
+    
+        var popup_a9b48d9e31dd9703529e2f8e85c85a54 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6e15ad27ca948218940b7fcaaf194268 = $(`<div id="html_6e15ad27ca948218940b7fcaaf194268" style="width: 100.0%; height: 100.0%;">New College</div>`)[0];
+            popup_a9b48d9e31dd9703529e2f8e85c85a54.setContent(html_6e15ad27ca948218940b7fcaaf194268);
+        
+
+        marker_ad4cdee9ccc98a7799df1153bd37c7c8.bindPopup(popup_a9b48d9e31dd9703529e2f8e85c85a54)
+        ;
+
+        
+    
+    
+            marker_ad4cdee9ccc98a7799df1153bd37c7c8.bindTooltip(
+                `<div>
+                     New College
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_deeab88433c4653be4d7a957027082f2 = L.marker(
+                [51.7553, -1.2543],
+                {}
+            ).addTo(map_e7ca6eb8bee0ea0587bf338e0308f5ce);
+        
+    
+            var icon_cd13012e5c1c996678bcf5a23229c383 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "darkblue", "prefix": "glyphicon"}
+            );
+            marker_deeab88433c4653be4d7a957027082f2.setIcon(icon_cd13012e5c1c996678bcf5a23229c383);
+        
+    
+        var popup_97cbd76efa4946c80495a8dd58f70d8a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8f5d9102bc992255aa2cad57546cd480 = $(`<div id="html_8f5d9102bc992255aa2cad57546cd480" style="width: 100.0%; height: 100.0%;">Turf Tavern</div>`)[0];
+            popup_97cbd76efa4946c80495a8dd58f70d8a.setContent(html_8f5d9102bc992255aa2cad57546cd480);
+        
+
+        marker_deeab88433c4653be4d7a957027082f2.bindPopup(popup_97cbd76efa4946c80495a8dd58f70d8a)
+        ;
+
+        
+    
+    
+            marker_deeab88433c4653be4d7a957027082f2.bindTooltip(
+                `<div>
+                     Turf Tavern
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
+</html>
