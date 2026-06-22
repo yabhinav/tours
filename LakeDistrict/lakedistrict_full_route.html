@@ -11,6 +11,9 @@
   body { margin: 0; }
   #map { width: 100vw; height: 100vh; }
   .day-label { font-weight: bold; }
+  .hidden-routing-panel {
+    display: none !important;
+  }
 </style>
 </head>
 
@@ -34,7 +37,9 @@ function gmaps(lat, lon, label) {
 
 // Map init
 const map = L.map('map').setView([54.47, -3.02], 10);
+map.createPane('markers');
 
+map.getPane('markers').style.zIndex = 650; // higher than routing lines
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18
 }).addTo(map);
@@ -56,7 +61,7 @@ const colours = {
 // =========================================================
 const routePoints = [
   // Start
-  {name:"Poppy Farm, Selside", day:"Start", time:"Stay", lat:54.381, lon:-2.708},
+ {name:"Selside (Start Point)", day:"Start", time:"Stay", lat:54.3800, lon:-2.7200},
 
   // DAY 1
   {name:"Dowkers Lane Car Park (Kendal)", day:"Day 1", time:"1.5–2 hrs", lat:54.326, lon:-2.748},
@@ -76,7 +81,7 @@ const routePoints = [
   {name:"Lakeside Car Park (Keswick)", day:"Day 3", time:"1–2 hrs", lat:54.595, lon:-3.137},
 
   // NEW: Keswick → Embleton (Night 3)
-  {name:"Hill Farm B&B (Embleton)", day:"Day 3", time:"Stay", lat:54.6625, lon:-3.2920},
+  {name:"Embleton(Stop Point)", day:"Day 3", time:"Stay", lat:54.6625, lon:-3.2920},
 
   // DAY 4 (Corrected start point)
   {name:"Buttermere NT Car Park", day:"Day 4", time:"1–1.5 hrs", lat:54.543, lon:-3.279},
@@ -95,10 +100,10 @@ const routeColours = {
 };
 
 const dayBase = {
-  "Day 1": L.latLng(54.381, -2.708),      // Poppy Farm
-  "Day 2": L.latLng(54.381, -2.708),      // Poppy Farm
-  "Day 3": L.latLng(54.6625, -3.2920),    // Embleton
-  "Day 4": L.latLng(54.392, -2.93)        // Calgarth Park
+  "Day 1": L.latLng(54.3800, -2.7200),   //Selside
+  "Day 2": L.latLng(54.3800, -2.7200),   //Selside
+  "Day 3": L.latLng(54.6625, -3.2920),   // Embleton
+  "Day 4": L.latLng(54.392, -2.93)       // Calgarth Park
 };
 
 const daySegments = {
@@ -124,13 +129,13 @@ for (let i = 0; i < routePoints.length - 1; i++) {
 // MANUAL FIXES FOR DAY STARTS
 // Day 1: Selside → Kendal
 daySegments["Day 1"].unshift([
-  L.latLng(54.381, -2.708),   // Selside
+  L.latLng(54.3800, -2.7200), // Selside
   L.latLng(54.326, -2.748)    // Kendal
 ]);
 
 // Day 2: Selside → Bowness
 daySegments["Day 2"].unshift([
-  L.latLng(54.381, -2.708),   // Selside
+  L.latLng(54.3800, -2.7200), // Selside
   L.latLng(54.366, -2.922)    // Bowness
 ]);
 
@@ -232,6 +237,7 @@ const latlngs = [];
 
 routePoints.forEach((p) => {
   const marker = L.circleMarker([p.lat, p.lon], {
+  pane: 'markers',
     radius: 8,
     color: colours[p.day],
     fillColor: colours[p.day],
@@ -259,7 +265,8 @@ Object.keys(daySegments).forEach(day => {
       addWaypoints: false,
       draggableWaypoints: false,
       routeWhileDragging: false,
-      show: false
+      show: false,
+      containerClassName: 'hidden-routing-panel'
     }).addTo(map);
   });
 });
@@ -271,6 +278,7 @@ Object.keys(daySegments).forEach(day => {
 // =========================================================
 secondaryParking.forEach((p) => {
   const marker = L.circleMarker([p.lat, p.lon], {
+  pane: 'markers',
     radius: 5,
     color: colours[p.day],
     fillColor: colours[p.day],
