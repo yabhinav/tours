@@ -20,9 +20,9 @@
 
 <style>
   #map { height: 100vh; }
-  .hidden-routing-panel { display: none !important; }
+  /* hide routing panels */
+  .leaflet-routing-container { display: none !important; }
 </style>
-
 </head>
 <body>
 
@@ -46,9 +46,16 @@ map.getPane('markers').style.zIndex = 650;
 // COLOUR SCHEME
 // ------------------------------------------------------------
 const dayColours = {
-  "Day 1": "red",
+  "Day 1": "black",
   "Day 2": "blue",
-  "Day 3": "grey",
+  "Day 3": "grey",   // pins
+  "Day 4": "orange"
+};
+
+const routeColours = {
+  "Day 1": "black",
+  "Day 2": "blue",
+  "Day 3": "cyan",   // routes
   "Day 4": "orange"
 };
 
@@ -57,6 +64,7 @@ const parkingColours = {
   "RingGo": "magenta"
 };
 
+const dangerColour = "red";
 
 // ------------------------------------------------------------
 // MARKER CLUSTER GROUP
@@ -65,7 +73,7 @@ const clusterGroup = L.markerClusterGroup();
 map.addLayer(clusterGroup);
 
 // ------------------------------------------------------------
-// TOURIST DESTINATIONS (DROP-PIN ICONS)
+// ICON HELPERS
 // ------------------------------------------------------------
 function pinIcon(color) {
   return L.icon({
@@ -77,28 +85,92 @@ function pinIcon(color) {
   });
 }
 
+const warningIcon = L.divIcon({
+  className: '',
+  html: '<div style="font-size:20px;">⚠️</div>',
+  iconSize: [20, 20],
+  iconAnchor: [10, 10]
+});
+
+// ------------------------------------------------------------
+// TOURIST DESTINATIONS (EXPANDED + RANKED)
+// ------------------------------------------------------------
 const touristDestinations = [
-  {name:"Kendal Town Centre", day:"Day 1", lat:54.326, lon:-2.748, suggestion:"Kendal Town Centre → Kendal Castle"},
-  {name:"Kendal Castle", day:"Day 1", lat:54.329, lon:-2.730, suggestion:"Kendal Town Centre → Kendal Castle"},
+  // Kendal (Day 1)
+  {name:"Kendal Castle", area:"Kendal", day:"Day 1", rank:1, lat:54.329, lon:-2.730},
+  {name:"Kendal Town Centre", area:"Kendal", day:"Day 1", rank:2, lat:54.326, lon:-2.748},
+  {name:"Kendal Museum", area:"Kendal", day:"Day 1", rank:3, lat:54.329, lon:-2.746},
+  {name:"Serpentine Woods & Alphabet Trail", area:"Kendal", day:"Day 1", rank:4, lat:54.330, lon:-2.760},
+  {name:"Kendal Parish Church", area:"Kendal", day:"Day 1", rank:5, lat:54.324, lon:-2.747},
 
-  {name:"Bowness Pier", day:"Day 2", lat:54.364, lon:-2.922, suggestion:"Bowness Pier (single stop)"},
-  {name:"Windermere Town", day:"Day 2", lat:54.379, lon:-2.905, suggestion:"Windermere Town → Orrest Head"},
-  {name:"Orrest Head", day:"Day 2", lat:54.386, lon:-2.901, suggestion:"Windermere Town → Orrest Head"},
-  {name:"Ambleside Town", day:"Day 2", lat:54.431, lon:-2.964, suggestion:"Ambleside Town → Stock Ghyll Force"},
-  {name:"Stock Ghyll Force", day:"Day 2", lat:54.434, lon:-2.960, suggestion:"Ambleside Town → Stock Ghyll Force"},
-  {name:"Grasmere Village", day:"Day 2", lat:54.458, lon:-3.020, suggestion:"Grasmere Village (single stop)"},
-  {name:"Aira Force", day:"Day 2", lat:54.580, lon:-2.950, suggestion:"Aira Force (single stop)"},
+  // Bowness (Day 2)
+  {name:"Bowness Pier", area:"Bowness", day:"Day 2", rank:1, lat:54.364, lon:-2.922},
+  {name:"World of Beatrix Potter", area:"Bowness", day:"Day 2", rank:2, lat:54.364, lon:-2.914},
+  {name:"Windermere Lake Cruises (Bowness)", area:"Bowness", day:"Day 2", rank:3, lat:54.364, lon:-2.922},
+  {name:"St Martin’s Church, Bowness", area:"Bowness", day:"Day 2", rank:4, lat:54.364, lon:-2.918},
+  {name:"Baddeley Clock Tower", area:"Bowness", day:"Day 2", rank:5, lat:54.365, lon:-2.923},
 
-  {name:"Rydal Cave", day:"Day 3", lat:54.448, lon:-2.996, suggestion:"Rydal Cave (single stop)"},
-  {name:"Castlerigg Stone Circle", day:"Day 3", lat:54.602, lon:-3.098, suggestion:"Castlerigg Stone Circle (single stop)"},
-  {name:"Keswick Town", day:"Day 3", lat:54.600, lon:-3.135, suggestion:"Keswick Town → Derwentwater Lakeside"},
-  {name:"Derwentwater Lakeside", day:"Day 3", lat:54.595, lon:-3.146, suggestion:"Keswick Town → Derwentwater Lakeside"},
-  {name:"Embleton", day:"Day 3", lat:54.660, lon:-3.360, suggestion:"Embleton (single stop)"},
+  // Windermere (Day 2)
+  {name:"Orrest Head", area:"Windermere", day:"Day 2", rank:1, lat:54.386, lon:-2.901},
+  {name:"Windermere Town Centre", area:"Windermere", day:"Day 2", rank:2, lat:54.379, lon:-2.905},
+  {name:"Queen Adelaide’s Hill", area:"Windermere", day:"Day 2", rank:3, lat:54.383, lon:-2.922},
+  {name:"Elleray Woods", area:"Windermere", day:"Day 2", rank:4, lat:54.384, lon:-2.905},
+  {name:"Windermere High Street", area:"Windermere", day:"Day 2", rank:5, lat:54.379, lon:-2.905},
 
-  {name:"Buttermere Lake", day:"Day 4", lat:54.543, lon:-3.280, suggestion:"Buttermere Lake (single stop)"},
-  {name:"Wasdale Head", day:"Day 4", lat:54.466, lon:-3.268, suggestion:"Wasdale Head → Wastwater Lake Shore"},
-  {name:"Wastwater Lake Shore", day:"Day 4", lat:54.464, lon:-3.283, suggestion:"Wasdale Head → Wastwater Lake Shore"},
-  {name:"Calgarth Park", day:"Day 4", lat:54.390, lon:-2.930, suggestion:"Calgarth Park (single stop)"}
+  // Ambleside (Day 2)
+  {name:"Stock Ghyll Force", area:"Ambleside", day:"Day 2", rank:1, lat:54.434, lon:-2.960},
+  {name:"Ambleside Town Centre", area:"Ambleside", day:"Day 2", rank:2, lat:54.431, lon:-2.964},
+  {name:"Bridge House", area:"Ambleside", day:"Day 2", rank:3, lat:54.431, lon:-2.963},
+  {name:"Jenkins Crag", area:"Ambleside", day:"Day 2", rank:4, lat:54.414, lon:-2.951},
+  {name:"Stagshaw Gardens", area:"Ambleside", day:"Day 2", rank:5, lat:54.417, lon:-2.951},
+
+  // Grasmere / Rydal (Day 2)
+  {name:"Grasmere Lake Shore", area:"Grasmere", day:"Day 2", rank:1, lat:54.457, lon:-3.022},
+  {name:"Dove Cottage", area:"Grasmere", day:"Day 2", rank:2, lat:54.457, lon:-3.004},
+  {name:"Rydal Mount", area:"Grasmere", day:"Day 2", rank:3, lat:54.448, lon:-2.996},
+  {name:"Grasmere Village", area:"Grasmere", day:"Day 2", rank:4, lat:54.458, lon:-3.020},
+  {name:"Allan Bank", area:"Grasmere", day:"Day 2", rank:5, lat:54.460, lon:-3.021},
+
+  // Aira Force / Ullswater (Day 2)
+  {name:"Aira Force Waterfall", area:"Aira Force", day:"Day 2", rank:1, lat:54.580, lon:-2.950},
+  {name:"Ullswater Steamers (Aira Pier)", area:"Aira Force", day:"Day 2", rank:2, lat:54.597, lon:-2.938},
+  {name:"Glencoyne Bay", area:"Aira Force", day:"Day 2", rank:3, lat:54.587, lon:-2.951},
+  {name:"Gowbarrow Fell", area:"Aira Force", day:"Day 2", rank:4, lat:54.585, lon:-2.957},
+  {name:"Lyulph’s Tower", area:"Aira Force", day:"Day 2", rank:5, lat:54.582, lon:-2.944},
+
+  // Keswick / Derwentwater / Castlerigg / Rydal (Day 3)
+  {name:"Derwentwater Lakeshore (Theatre by the Lake)", area:"Keswick", day:"Day 3", rank:1, lat:54.595, lon:-3.147},
+  {name:"Keswick Town Centre", area:"Keswick", day:"Day 3", rank:2, lat:54.600, lon:-3.135},
+  {name:"Friar’s Crag", area:"Keswick", day:"Day 3", rank:3, lat:54.593, lon:-3.145},
+  {name:"Hope Park", area:"Keswick", day:"Day 3", rank:4, lat:54.595, lon:-3.137},
+  {name:"Pencil Museum", area:"Keswick", day:"Day 3", rank:5, lat:54.603, lon:-3.137},
+
+  {name:"Castlerigg Stone Circle", area:"Castlerigg", day:"Day 3", rank:1, lat:54.602, lon:-3.098},
+  {name:"Rydal Cave", area:"Rydal", day:"Day 3", rank:1, lat:54.448, lon:-2.996},
+  {name:"Rydal Water Shore Path", area:"Rydal", day:"Day 3", rank:2, lat:54.447, lon:-2.988},
+  {name:"Rydal Hall Gardens", area:"Rydal", day:"Day 3", rank:3, lat:54.447, lon:-2.987},
+  {name:"Buckstones Jump", area:"Rydal", day:"Day 3", rank:4, lat:54.450, lon:-2.980},
+
+  // Buttermere (Day 4)
+  {name:"Buttermere Lake Circuit", area:"Buttermere", day:"Day 4", rank:1, lat:54.543, lon:-3.280},
+  {name:"Fleetwith Pike Viewpoint", area:"Buttermere", day:"Day 4", rank:2, lat:54.528, lon:-3.262},
+  {name:"Haystacks", area:"Buttermere", day:"Day 4", rank:3, lat:54.515, lon:-3.258},
+  {name:"Buttermere Village", area:"Buttermere", day:"Day 4", rank:4, lat:54.543, lon:-3.276},
+  {name:"Crummock Water Shore", area:"Buttermere", day:"Day 4", rank:5, lat:54.558, lon:-3.314},
+
+  // Wasdale / Wastwater (Day 4)
+  {name:"Wastwater Lake Shore (Viewpoint)", area:"Wastwater", day:"Day 4", rank:1, lat:54.464, lon:-3.283},
+  {name:"Wasdale Head", area:"Wasdale", day:"Day 4", rank:2, lat:54.466, lon:-3.268},
+  {name:"Scafell Pike (Wasdale Route Start)", area:"Wasdale", day:"Day 4", rank:3, lat:54.454, lon:-3.211},
+  {name:"Great Gable Viewpoint", area:"Wasdale", day:"Day 4", rank:4, lat:54.477, lon:-3.235},
+  {name:"St Olaf’s Church, Wasdale", area:"Wasdale", day:"Day 4", rank:5, lat:54.466, lon:-3.269},
+
+  // Calgarth / Windermere base (Day 4)
+  {name:"Brockhole on Windermere", area:"Calgarth", day:"Day 4", rank:1, lat:54.402, lon:-2.938},
+  {name:"Wray Castle", area:"Calgarth", day:"Day 4", rank:2, lat:54.394, lon:-2.965},
+  {name:"Townend (Troutbeck)", area:"Calgarth", day:"Day 4", rank:3, lat:54.414, lon:-2.892},
+  {name:"White Cross Bay Lakeshore", area:"Calgarth", day:"Day 4", rank:4, lat:54.392, lon:-2.938},
+  {name:"Calgarth Park (Home Base)", area:"Calgarth", day:"Day 4", rank:5, lat:54.390, lon:-2.930}
 ];
 
 // ------------------------------------------------------------
@@ -137,6 +209,8 @@ const parkingLocations = [
   {name:"Gatesgarth Car Park (RingGo)", type:"RingGo", lat:54.5430, lon:-3.2800},
   {name:"Brackenclose Car Park (RingGo)", type:"RingGo", lat:54.4600, lon:-3.2700},
 
+  // Calgarth
+  {name:"Booths Windermere (Free 2h)", type:"Supermarket", lat:54.3788, lon:-2.9055}
 ];
 
 // ------------------------------------------------------------
@@ -157,7 +231,7 @@ function distance(lat1, lon1, lat2, lon2) {
 }
 
 // ------------------------------------------------------------
-// ADD PARKING MARKERS (NO DUPLICATES)
+// ADD PARKING MARKERS
 // ------------------------------------------------------------
 parkingLocations.forEach(p => {
   const marker = L.circleMarker([p.lat, p.lon], {
@@ -179,7 +253,7 @@ parkingLocations.forEach(p => {
 });
 
 // ------------------------------------------------------------
-// ADD TOURIST MARKERS WITH PARKING LISTS
+// ADD TOURIST MARKERS WITH RANK + PARKING LISTS
 // ------------------------------------------------------------
 touristDestinations.forEach(dest => {
 
@@ -210,14 +284,11 @@ touristDestinations.forEach(dest => {
   });
 
   marker.bindPopup(`
-    <b style="color:${dayColours[dest.day]}">${dest.day}</b><br>
-    <b>${dest.name}</b><br><br>
-
-    <i>Suggested local order:</i><br>${dest.suggestion}<br><br>
-
+    <b style="color:${dayColours[dest.day]}">${dest.day} — Rank #${dest.rank}</b><br>
+    <b>${dest.name}</b><br>
+    <i>Area:</i> ${dest.area}<br><br>
     <i>Parking options (Supermarket first):</i><br>
-    ${parkingList}<br><br>
-
+    ${parkingList || "No nearby parking listed within 2 km."}<br><br>
     <a href="https://maps.apple.com/?q=${dest.lat},${dest.lon}" target="_blank">Apple Maps</a><br>
     <a href="https://www.google.com/maps?q=${dest.lat},${dest.lon}" target="_blank">Google Maps</a>
   `);
@@ -226,13 +297,13 @@ touristDestinations.forEach(dest => {
 });
 
 // ------------------------------------------------------------
-// REAL ROAD ROUTES USING LEAFLET ROUTING MACHINE
+// REAL ROAD ROUTES USING LEAFLET ROUTING MACHINE (SAFE ONLY)
 // ------------------------------------------------------------
 function roadRoute(points, day) {
   L.Routing.control({
     waypoints: points.map(p => L.latLng(p[0], p[1])),
     lineOptions: {
-      styles: [{ color: dayColours[day], weight: 5, opacity: 0.9 }]
+      styles: [{ color: routeColours[day], weight: 5, opacity: 0.9 }]
     },
     addWaypoints: false,
     draggableWaypoints: false,
@@ -244,54 +315,122 @@ function roadRoute(points, day) {
 }
 
 // ------------------------------------------------------------
-// SCENIC ROUTES BETWEEN TOWNS + HOME RETURNS (REAL ROADS)
+// HOME LOCATIONS
+// ------------------------------------------------------------
+const HOME_SELSIDE  = [54.3625, -2.7080];
+const HOME_KESWICK  = [54.6000, -3.1350];
+const HOME_CALGARTH = [54.3900, -2.9300];
+
+// ------------------------------------------------------------
+// SAFE DAY ROUTES (NO PASSES)
 // ------------------------------------------------------------
 
-// HOME LOCATIONS
-const HOME_SELSIDE   = [54.3625, -2.7080];
-const HOME_EMBLETON  = [54.660,  -3.360];
-const HOME_CALGARTH  = [54.390,  -2.930];
-
-// DAY 1 — ends at Selside
+// DAY 1 — Selside → Kendal → Bowness → Selside
 roadRoute([
+  HOME_SELSIDE,
   [54.326, -2.748], // Kendal Town Centre
   [54.329, -2.730], // Kendal Castle
   [54.364, -2.922], // Bowness Pier
-  HOME_SELSIDE       // Return home
+  HOME_SELSIDE
 ], "Day 1");
 
-// DAY 2 — ends at Selside
+// DAY 2 — Selside → Windermere → Ambleside → Grasmere → Aira → Selside
 roadRoute([
-  [54.364, -2.922], // Bowness Pier
-  [54.379, -2.905], // Windermere Town
+  HOME_SELSIDE,
+  [54.379, -2.905], // Windermere Town Centre
   [54.386, -2.901], // Orrest Head
-  [54.431, -2.964], // Ambleside Town
+  [54.431, -2.964], // Ambleside Town Centre
   [54.434, -2.960], // Stock Ghyll Force
   [54.458, -3.020], // Grasmere Village
-  [54.580, -2.950], // Aira Force
-  HOME_SELSIDE       // Return home
+  [54.580, -2.950], // Aira Force Waterfall
+  HOME_SELSIDE
 ], "Day 2");
 
-// DAY 3 — ends at Embleton (home)
+// DAY 3 — Aira → Rydal → Castlerigg → Keswick → Derwentwater → Keswick
 roadRoute([
-  [54.580, -2.950], // Aira Force
+  [54.580, -2.950], // Aira Force Waterfall
   [54.448, -2.996], // Rydal Cave
   [54.602, -3.098], // Castlerigg Stone Circle
-  [54.600, -3.135], // Keswick Town
-  [54.595, -3.146], // Derwentwater Lakeside
-  [54.660, -3.360], // Embleton
-  HOME_EMBLETON      // Return home (same place)
+  [54.600, -3.135], // Keswick Town Centre
+  [54.595, -3.147], // Derwentwater Lakeshore
+  HOME_KESWICK
 ], "Day 3");
 
-// DAY 4 — ends at Calgarth Park (home)
+// DAY 4 — Keswick → Braithwaite → Lorton → Buttermere → Lorton → A66/A595 → Wasdale → Wastwater → Calgarth
 roadRoute([
-  [54.660, -3.360], // Embleton
-  [54.543, -3.280], // Buttermere Lake
+  HOME_KESWICK,
+  [54.606, -3.147], // Braithwaite area
+  [54.615, -3.281], // Lorton area
+  [54.543, -3.280], // Buttermere
+  [54.615, -3.281], // back via Lorton
+  [54.642, -3.190], // A66 / A595 junction area
   [54.466, -3.268], // Wasdale Head
   [54.464, -3.283], // Wastwater Lake Shore
-  [54.390, -2.930], // Calgarth Park
-  HOME_CALGARTH      // Return home (same place)
+  HOME_CALGARTH
 ], "Day 4");
+
+// ------------------------------------------------------------
+// DANGER ROADS (RED + ⚠️ MARKERS) – TO AVOID
+// ------------------------------------------------------------
+function drawDangerRoad(name, waypoints) {
+  L.Routing.control({
+    waypoints: waypoints.map(p => L.latLng(p[0], p[1])),
+    lineOptions: {
+      styles: [{ color: dangerColour, weight: 6, opacity: 0.9 }]
+    },
+    addWaypoints: false,
+    draggableWaypoints: false,
+    fitSelectedRoutes: false,
+    show: false,
+    routeWhileDragging: false,
+    createMarker: () => null
+  }).addTo(map);
+
+  const mid = waypoints[Math.floor(waypoints.length / 2)];
+  const marker = L.marker(mid, { icon: warningIcon });
+  marker.bindPopup(`
+    <b style="color:${dangerColour}">⚠️ Danger Road</b><br>
+    ${name}<br><br>
+    Steep / narrow / not recommended for new drivers.<br>
+    <b>AVOID this road.</b>
+  `);
+  marker.addTo(map);
+}
+
+// HONISTER PASS
+drawDangerRoad("Honister Pass", [
+  [54.543, -3.280],  // Gatesgarth / Buttermere side
+  [54.528, -3.262],
+  [54.525, -3.230],
+  [54.525, -3.195],  // Summit
+  [54.520, -3.170],
+  [54.515, -3.159]   // Seatoller side
+]);
+
+// NEWLANDS PASS
+drawDangerRoad("Newlands Pass", [
+  [54.543, -3.280],  // Buttermere side
+  [54.556, -3.236],  // Newlands Hause
+  [54.565, -3.210],
+  [54.582, -3.200],
+  [54.602, -3.256]   // Braithwaite side
+]);
+
+// HARDKNOTT PASS
+drawDangerRoad("Hardknott Pass", [
+  [54.402, -3.213],
+  [54.404, -3.190],
+  [54.404, -3.170],
+  [54.404, -3.150]
+]);
+
+// WRYNOSE PASS
+drawDangerRoad("Wrynose Pass", [
+  [54.404, -3.150],
+  [54.410, -3.120],
+  [54.420, -3.090],
+  [54.425, -3.060]
+]);
 
 </script>
 
