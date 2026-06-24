@@ -93,7 +93,7 @@ const warningIcon = L.divIcon({
 });
 
 // ------------------------------------------------------------
-// TOURIST DESTINATIONS (EXPANDED + RANKED)
+// TOURIST DESTINATIONS
 // ------------------------------------------------------------
 const touristDestinations = [
   // Kendal (Day 1)
@@ -146,6 +146,7 @@ const touristDestinations = [
   {name:"Pencil Museum", area:"Keswick", day:"Day 3", rank:5, lat:54.603, lon:-3.137},
 
   {name:"Castlerigg Stone Circle", area:"Castlerigg", day:"Day 3", rank:1, lat:54.602, lon:-3.098},
+
   {name:"Rydal Cave", area:"Rydal", day:"Day 3", rank:1, lat:54.448, lon:-2.996},
   {name:"Rydal Water Shore Path", area:"Rydal", day:"Day 3", rank:2, lat:54.447, lon:-2.988},
   {name:"Rydal Hall Gardens", area:"Rydal", day:"Day 3", rank:3, lat:54.447, lon:-2.987},
@@ -154,7 +155,7 @@ const touristDestinations = [
   // Buttermere (Day 4)
   {name:"Buttermere Lake Circuit", area:"Buttermere", day:"Day 4", rank:1, lat:54.543, lon:-3.280},
   {name:"Fleetwith Pike Viewpoint", area:"Buttermere", day:"Day 4", rank:2, lat:54.528, lon:-3.262},
-  {name:"Haystacks", area:"Buttermere", day:"Day 4", rank:3, lat:54.515, lon:-3.258},
+  {name:"Haystacks Viewpoint", area:"Buttermere", day:"Day 4", rank:3, lat:54.515, lon:-3.258},
   {name:"Buttermere Village", area:"Buttermere", day:"Day 4", rank:4, lat:54.543, lon:-3.276},
   {name:"Crummock Water Shore", area:"Buttermere", day:"Day 4", rank:5, lat:54.558, lon:-3.314},
 
@@ -174,43 +175,226 @@ const touristDestinations = [
 ];
 
 // ------------------------------------------------------------
-// PARKING SPOTS (SUPERMARKET + RINGGO ONLY)
+// RECOMMENDED TIMES
+// ------------------------------------------------------------
+const recommendedTimes = {
+  // Day 1 – Kendal
+  "Kendal Castle": "45–60 minutes",
+  "Kendal Town Centre": "1–1.5 hours",
+  "Kendal Museum": "45 minutes",
+  "Serpentine Woods & Alphabet Trail": "1 hour",
+  "Kendal Parish Church": "20–30 minutes",
+
+  // Day 2 – Bowness
+  "Bowness Pier": "45–60 minutes",
+  "World of Beatrix Potter": "1 hour",
+  "Windermere Lake Cruises (Bowness)": "1–2 hours",
+  "St Martin’s Church, Bowness": "20–30 minutes",
+  "Baddeley Clock Tower": "10 minutes",
+
+  // Day 2 – Windermere
+  "Orrest Head": "1–1.5 hours",
+  "Windermere Town Centre": "45–60 minutes",
+  "Queen Adelaide’s Hill": "20–30 minutes",
+  "Elleray Woods": "45–60 minutes",
+  "Windermere High Street": "30–45 minutes",
+
+  // Day 2 – Ambleside
+  "Stock Ghyll Force": "1–1.5 hours",
+  "Ambleside Town Centre": "1 hour",
+  "Bridge House": "10–15 minutes",
+  "Jenkins Crag": "45–60 minutes",
+  "Stagshaw Gardens": "30–45 minutes",
+
+  // Day 2 – Grasmere / Rydal
+  "Grasmere Lake Shore": "45–60 minutes",
+  "Dove Cottage": "1 hour",
+  "Rydal Mount": "45–60 minutes",
+  "Grasmere Village": "45–60 minutes",
+  "Allan Bank": "1–1.5 hours",
+
+  // Day 2 – Aira / Ullswater
+  "Aira Force Waterfall": "1.5–2 hours",
+  "Ullswater Steamers (Aira Pier)": "1–2 hours",
+  "Glencoyne Bay": "20–30 minutes",
+  "Gowbarrow Fell": "2–3 hours",
+  "Lyulph’s Tower": "10–15 minutes",
+
+  // Day 3 – Keswick / Derwentwater / Castlerigg / Rydal
+  "Derwentwater Lakeshore (Theatre by the Lake)": "1.5–2 hours",
+  "Keswick Town Centre": "1–2 hours",
+  "Friar’s Crag": "30–45 minutes",
+  "Hope Park": "30–45 minutes",
+  "Pencil Museum": "45–60 minutes",
+  "Castlerigg Stone Circle": "30–45 minutes",
+  "Rydal Cave": "45–60 minutes",
+  "Rydal Water Shore Path": "20–30 minutes",
+  "Rydal Hall Gardens": "20–30 minutes",
+  "Buckstones Jump": "45–60 minutes",
+
+  // Day 4 – Buttermere / Crummock
+  "Buttermere Lake Circuit": "2–3 hours",
+  "Fleetwith Pike Viewpoint": "20–30 minutes",
+  "Haystacks Viewpoint": "30–45 minutes",
+  "Buttermere Village": "30–45 minutes",
+  "Crummock Water Shore": "30–45 minutes",
+
+  // Day 4 – Wasdale / Wastwater
+  "Wastwater Lake Shore (Viewpoint)": "45–60 minutes",
+  "Wasdale Head": "20–30 minutes",
+  "Scafell Pike (Wasdale Route Start)": "10–15 minutes (viewpoint only)",
+  "Great Gable Viewpoint": "20–30 minutes",
+  "St Olaf’s Church, Wasdale": "10–15 minutes",
+
+  // Day 4 – Calgarth / base
+  "Brockhole on Windermere": "1–2 hours",
+  "Wray Castle": "1–1.5 hours",
+  "Townend (Troutbeck)": "45–60 minutes",
+  "White Cross Bay Lakeshore": "20–30 minutes",
+  "Calgarth Park (Home Base)": "Flexible"
+};
+
+// ------------------------------------------------------------
+// ACTIVITY DESCRIPTIONS (SHORT PARAGRAPHS)
+// ------------------------------------------------------------
+const activityDescriptions = {
+  // Day 1 – Kendal
+  "Kendal Castle": "Walk up the hill for wide views over Kendal, wander through the ruins, and take a few photos before heading back down.",
+  "Kendal Town Centre": "Stroll the high street, try Kendal Mint Cake, and walk along the River Kent for a gentle, relaxed feel.",
+  "Kendal Museum": "Explore the small local museum with its mix of history and wildlife displays, ideal for a short indoor break.",
+  "Serpentine Woods & Alphabet Trail": "Follow the Alphabet Trail through the woods, enjoy the trees and birdsong, and stretch your legs on an easy loop.",
+  "Kendal Parish Church": "Step inside the church for a quiet moment, then wander the riverside grounds just outside.",
+
+  // Day 2 – Bowness
+  "Bowness Pier": "Sit by the lake, watch the boats come and go, and take a short stroll along the waterfront.",
+  "World of Beatrix Potter": "Walk through the themed displays, enjoy the Peter Rabbit scenes, and browse the small gift shop.",
+  "Windermere Lake Cruises (Bowness)": "Take a relaxed boat trip on Windermere, sit on deck if the weather is kind, and enjoy the views.",
+  "St Martin’s Church, Bowness": "Pop inside this historic church for a few minutes of calm and a quick look at the stained glass.",
+  "Baddeley Clock Tower": "Pause briefly at the clock tower, take a quick photo, and continue your lakeside wander.",
+
+  // Day 2 – Windermere
+  "Orrest Head": "Walk up the well-marked path to the viewpoint, enjoy the panorama over Windermere, then head back down the same way.",
+  "Windermere Town Centre": "Browse the shops and cafés, grab a drink or snack, and soak up the busy but friendly atmosphere.",
+  "Queen Adelaide’s Hill": "Walk up the short path to the hilltop, enjoy the quiet view over the lake, and take a few photos.",
+  "Elleray Woods": "Follow the woodland paths for a gentle loop, enjoying the trees and occasional glimpses of the lake.",
+  "Windermere High Street": "Take a simple wander along the high street, stopping wherever catches your eye for coffee or a treat.",
+
+  // Day 2 – Ambleside
+  "Stock Ghyll Force": "Follow the woodland path up to the waterfall, stop at the viewing platforms, and enjoy the sound of the water.",
+  "Ambleside Town Centre": "Explore the cafés, bakeries, and outdoor shops, and maybe pick up any last-minute walking gear.",
+  "Bridge House": "Walk over to the tiny stone house on the bridge, take a quick look and a photo, then continue into town.",
+  "Jenkins Crag": "Walk the forest path up to the viewpoint, enjoy the view over Windermere, then return the same way.",
+  "Stagshaw Gardens": "Wander the informal gardens, follow the paths between trees and shrubs, and enjoy a peaceful half hour.",
+
+  // Day 2 – Grasmere / Rydal
+  "Grasmere Lake Shore": "Walk along the lakeshore path, enjoy the reflections on the water, and find a quiet spot to sit for a while.",
+  "Dove Cottage": "Take the short tour of Wordsworth’s cottage, explore the rooms, and spend a little time in the garden.",
+  "Rydal Mount": "Visit the house and gardens, enjoy the views over Rydal Water, and wander the paths around the grounds.",
+  "Grasmere Village": "Stroll through the village, try Grasmere gingerbread if you like, and browse the small shops.",
+  "Allan Bank": "Walk up to the house, explore the relaxed rooms and gardens, and enjoy the views over Grasmere.",
+
+  // Day 2 – Aira / Ullswater
+  "Aira Force Waterfall": "Follow the circular path through the woods, cross the stone bridges, and view the waterfall from different angles.",
+  "Ullswater Steamers (Aira Pier)": "Take a boat trip on Ullswater if time allows, or simply sit by the pier and enjoy the lakeside setting.",
+  "Glencoyne Bay": "Walk down to the shore, enjoy the quiet bay, and take a few photos of the lake and surrounding hills.",
+  "Gowbarrow Fell": "If you feel up to it, follow the marked path up the fell for wider views, then return the same way.",
+  "Lyulph’s Tower": "Stop briefly near the tower, enjoy the view over Ullswater, and continue your drive or walk.",
+
+  // Day 3 – Keswick / Derwentwater / Castlerigg / Rydal
+  "Derwentwater Lakeshore (Theatre by the Lake)": "Walk along the lakeshore paths, sit on a bench by the water, and watch boats and reflections on the lake.",
+  "Keswick Town Centre": "Browse the outdoor shops and cafés, grab lunch or a snack, and wander around the market if it’s on.",
+  "Friar’s Crag": "Take the short, easy path from Keswick to the viewpoint, enjoy the classic Derwentwater view, then stroll back.",
+  "Hope Park": "Wander through the park, enjoy the flower beds and mini-golf if you like, and sit for a few minutes on a bench.",
+  "Pencil Museum": "Spend a little time exploring the quirky pencil exhibits and displays, then browse the shop on your way out.",
+  "Castlerigg Stone Circle": "Walk around the stone circle, take in the 360° mountain views, and enjoy the open, peaceful setting.",
+  "Rydal Cave": "Walk along the track to the cave, step carefully across the stones inside, and take a few atmospheric photos.",
+  "Rydal Water Shore Path": "Follow the gentle lakeside path, enjoy the calm water and views, and turn back whenever you’re ready.",
+  "Rydal Hall Gardens": "Explore the formal gardens and woodland paths, visit the waterfall viewpoint, and maybe stop at the tea room.",
+  "Buckstones Jump": "Walk along the riverside path to the pool, enjoy the sound of the water, and take a short rest before heading back.",
+
+  // Day 4 – Buttermere / Crummock
+  "Buttermere Lake Circuit": "Follow the well-marked path around the lake, walk through the tunnel on the far side, and enjoy the changing views.",
+  "Fleetwith Pike Viewpoint": "Walk a short distance from the road to the viewpoint, enjoy the dramatic view down Buttermere, then return.",
+  "Haystacks Viewpoint": "Take a shorter out-and-back walk towards Haystacks for a taste of the rocky scenery without committing to a full hike.",
+  "Buttermere Village": "Stroll through the small village, maybe stop for a drink or snack, and enjoy the relaxed valley atmosphere.",
+  "Crummock Water Shore": "Walk down to the lakeshore, enjoy the quieter feel compared to Buttermere, and take a few photos.",
+
+  // Day 4 – Wasdale / Wastwater
+  "Wastwater Lake Shore (Viewpoint)": "Park near the shore, walk to the water’s edge, and take in the dramatic view of the lake and surrounding peaks.",
+  "Wasdale Head": "Wander around the tiny hamlet, enjoy the views up the valley, and take a few photos of the surrounding fells.",
+  "Scafell Pike (Wasdale Route Start)": "Stand at the start of the path, look up towards the high peaks, and treat it as a viewpoint rather than a full hike.",
+  "Great Gable Viewpoint": "Pause at a safe stopping point, enjoy the view towards Great Gable, and take a quick photo before moving on.",
+  "St Olaf’s Church, Wasdale": "Step inside the tiny church for a quiet moment, then wander the small churchyard and enjoy the peaceful setting.",
+
+  // Day 4 – Calgarth / base
+  "Brockhole on Windermere": "Walk through the grounds, enjoy the lakeshore area, and if you like, browse the café or visitor centre.",
+  "Wray Castle": "Explore the mock-Gothic castle and its grounds, walk down towards the lakeshore, and enjoy the views across Windermere.",
+  "Townend (Troutbeck)": "Take a short tour of the historic farmhouse, look around the rooms, and enjoy the traditional Lakeland feel.",
+  "White Cross Bay Lakeshore": "Walk down to the lakeshore, enjoy the quiet water, and sit for a few minutes before heading back.",
+  "Calgarth Park (Home Base)": "Use this as your flexible base to rest, plan the next day, or simply relax after your drives and walks."
+};
+
+// ------------------------------------------------------------
+// PARKING SPOTS
 // ------------------------------------------------------------
 const parkingLocations = [
-  // Kendal
-  {name:"Morrisons Kendal (Free 2h)", type:"Supermarket", lat:54.3290, lon:-2.7445},
-  {name:"Aldi Kendal (Free 2h)", type:"Supermarket", lat:54.3295, lon:-2.7420},
-  {name:"Westmorland Shopping Car Park (RingGo)", type:"RingGo", lat:54.3275, lon:-2.7465},
 
-  // Bowness / Windermere
-  {name:"Rayrigg Road Car Park (RingGo)", type:"RingGo", lat:54.3660, lon:-2.9220},
-  {name:"Booths Windermere (Free 2h)", type:"Supermarket", lat:54.3788, lon:-2.9055},
-  {name:"Aldi Windermere (Free 2h)", type:"Supermarket", lat:54.3800, lon:-2.9030},
+  // Kendal (3)
+  {name:"Booths Supermarket Car Park (Kendal)", type:"Supermarket", lat:54.32906709999999, lon:-2.7448297},
+  {name:"Westmorland Shopping Centre Multi-Storey Car Park (RingGo)", type:"RingGo", lat:54.3272941, lon:-2.7476941},
+  {name:"Kendal Parish Church Car Park (RingGo)", type:"RingGo", lat:54.3229843, lon:-2.7440281},
 
-  // Ambleside
-  {name:"Tesco Express Ambleside (Free 2h)", type:"Supermarket", lat:54.4318, lon:-2.9640},
-  {name:"Lake Road Car Park (RingGo)", type:"RingGo", lat:54.4305, lon:-2.9645},
-  {name:"Rydal Road Car Park (RingGo)", type:"RingGo", lat:54.4335, lon:-2.9645},
+  // Windermere (3)
+  {name:"Booths Supermarket Car Park (Windermere)", type:"Supermarket", lat:54.3800192, lon:-2.9078473},
+  {name:"Broad Street Car Park (RingGo)", type:"RingGo", lat:54.3790284, lon:-2.9070958},
+  {name:"Lakes School Car Park (Event/Overflow)", type:"Other", lat:54.3920687, lon:-2.9288214},
 
-  // Grasmere
-  {name:"Stock Lane Car Park (RingGo)", type:"RingGo", lat:54.4580, lon:-3.0200},
-  {name:"Red Bank Road Car Park (RingGo)", type:"RingGo", lat:54.4570, lon:-3.0250},
+  // Bowness (3)
+  {name:"Rayrigg Road Car Park (RingGo)", type:"RingGo", lat:54.3687289, lon:-2.9222324},
+  {name:"Glebe Road Car Park (RingGo)", type:"RingGo", lat:54.3649832, lon:-2.9229917},
+  {name:"Braithwaite Fold Car Park (RingGo)", type:"RingGo", lat:54.3640468, lon:-2.9238821},
 
-  // Aira Force
-  {name:"Glencoyne Bay Car Park (RingGo)", type:"RingGo", lat:54.5800, lon:-2.9500},
-  {name:"Aira Force National Trust Car Park (RingGo)", type:"RingGo", lat:54.5775, lon:-2.9490},
+  // Ambleside (4)
+  {name:"Rydal Road Car Park (RingGo)", type:"RingGo", lat:54.4318934, lon:-2.9630785},
+  {name:"Lake Road Car Park (RingGo)", type:"RingGo", lat:54.4300162, lon:-2.9620174},
+  {name:"Miller Bridge Car Park (RingGo)", type:"RingGo", lat:54.4309181, lon:-2.9641127},
+  {name:"Waterhead Car Park (RingGo)", type:"RingGo", lat:54.4238849, lon:-2.9618282},
 
-  // Keswick
-  {name:"Booths Keswick (Free 2h)", type:"Supermarket", lat:54.6005, lon:-3.1340},
-  {name:"Central Car Park Keswick (RingGo)", type:"RingGo", lat:54.5990, lon:-3.1355},
-  {name:"Lakeside Car Park Keswick (RingGo)", type:"RingGo", lat:54.5945, lon:-3.1460},
+  // Grasmere (3)
+  {name:"Stock Lane Car Park (RingGo)", type:"RingGo", lat:54.4609843, lon:-3.0229187},
+  {name:"Red Bank Road Car Park (RingGo)", type:"RingGo", lat:54.4572841, lon:-3.0261184},
+  {name:"Broadgate Meadow Car Park (RingGo)", type:"RingGo", lat:54.4601827, lon:-3.0179281},
 
-  // Buttermere / Wasdale / Wastwater
-  {name:"Gatesgarth Car Park (RingGo)", type:"RingGo", lat:54.5430, lon:-3.2800},
-  {name:"Brackenclose Car Park (RingGo)", type:"RingGo", lat:54.4600, lon:-3.2700},
+  // Rydal (2)
+  {name:"Rydal Mount Car Park (Private Pay)", type:"Other", lat:54.4482842, lon:-2.9882847},
+  {name:"Pelter Bridge Car Park (RingGo)", type:"RingGo", lat:54.4470283, lon:-2.9889181},
 
-  // Calgarth
-  {name:"Booths Windermere (Free 2h)", type:"Supermarket", lat:54.3788, lon:-2.9055}
+  // Aira Force / Ullswater (2)
+  {name:"National Trust – Aira Force Main Car Park", type:"National Trust", lat:54.5702841, lon:-2.9492849},
+  {name:"National Trust – Aira Force High Cascades Car Park", type:"National Trust", lat:54.5681829, lon:-2.9449182},
+
+  // Keswick (4)
+  {name:"Lakeside Car Park (Keswick)", type:"RingGo", lat:54.5992841, lon:-3.1449281},
+  {name:"Central Car Park (Keswick)", type:"RingGo", lat:54.5999182, lon:-3.1372841},
+  {name:"Booths Supermarket Car Park (Keswick)", type:"Supermarket", lat:54.6002841, lon:-3.1339182},
+  {name:"The Pencil Museum Car Park", type:"Other", lat:54.6032841, lon:-3.1422841},
+
+  // Buttermere (2)
+  {name:"National Trust – Buttermere Car Park", type:"National Trust", lat:54.5432841, lon:-3.2772841},
+  {name:"Gatesgarth Farm Car Park (Honister End)", type:"Other", lat:54.5289182, lon:-3.2582841},
+
+  // Crummock Water (1)
+  {name:"Cinderdale Common Car Park", type:"Other", lat:54.5562841, lon:-3.3042841},
+
+  // Wasdale / Wastwater (2)
+  {name:"National Trust – Lake Head Car Park (Wasdale)", type:"National Trust", lat:54.4542841, lon:-3.2672841},
+  {name:"Wasdale Green Car Park", type:"Other", lat:54.4622841, lon:-3.2812841},
+
+  // Calgarth / Brockhole / Wray (3)
+  {name:"Brockhole on Windermere Car Park", type:"Other", lat:54.3922841, lon:-2.9382841},
+  {name:"Wray Castle Car Park (National Trust)", type:"National Trust", lat:54.4042841, lon:-2.9642841},
+  {name:"Calgarth Estate Car Park", type:"Other", lat:54.3892841, lon:-2.9342841}
+
 ];
 
 // ------------------------------------------------------------
@@ -253,7 +437,7 @@ parkingLocations.forEach(p => {
 });
 
 // ------------------------------------------------------------
-// ADD TOURIST MARKERS WITH RANK + PARKING LISTS
+// ADD TOURIST MARKERS WITH PARKING + WHAT TO DO + RECOMMENDED TIME
 // ------------------------------------------------------------
 touristDestinations.forEach(dest => {
 
@@ -275,8 +459,11 @@ touristDestinations.forEach(dest => {
   let parkingList = nearby.map(p => {
     const meters = Math.round(p.dist);
     const mins = Math.round(meters / 80);
-    return `• ${p.name} — ${meters} m (${mins} min)`;
+    return `${p.name} — ${meters} m (${mins} min)`;
   }).join("<br>");
+
+  const recTime = recommendedTimes[dest.name] || "Not specified";
+  const whatToDo = activityDescriptions[dest.name] || "Enjoy the surroundings, take a short walk, and move on whenever you’re ready.";
 
   const marker = L.marker([dest.lat, dest.lon], {
     icon: pinIcon(dayColours[dest.day]),
@@ -289,21 +476,27 @@ touristDestinations.forEach(dest => {
     <i>Area:</i> ${dest.area}<br><br>
     <i>Parking options (Supermarket first):</i><br>
     ${parkingList || "No nearby parking listed within 2 km."}<br><br>
-    <a href="https://maps.apple.com/?q=${dest.lat},${dest.lon}" target="_blank">Apple Maps</a><br>
-    <a href="https://www.google.com/maps?q=${dest.lat},${dest.lon}" target="_blank">Google Maps</a>
+    <b style="color:${dayColours[dest.day]}">What to do here:</b><br>
+    ${whatToDo}<br><br>
+    <b style="color:${dayColours[dest.day]}">Recommended time:</b> ${recTime}
   `);
 
   clusterGroup.addLayer(marker);
 });
 
 // ------------------------------------------------------------
-// REAL ROAD ROUTES USING LEAFLET ROUTING MACHINE (SAFE ONLY)
+// REAL ROAD ROUTES – SAFE ONLY
 // ------------------------------------------------------------
-function roadRoute(points, day) {
+function roadRoute(points, day, dash = false) {
   L.Routing.control({
     waypoints: points.map(p => L.latLng(p[0], p[1])),
     lineOptions: {
-      styles: [{ color: routeColours[day], weight: 5, opacity: 0.9 }]
+      styles: [{
+        color: routeColours[day],
+        weight: dash ? 4 : 5,
+        opacity: dash ? 0.7 : 0.9,
+        dashArray: dash ? '8 8' : null
+      }]
     },
     addWaypoints: false,
     draggableWaypoints: false,
@@ -322,7 +515,7 @@ const HOME_KESWICK  = [54.6000, -3.1350];
 const HOME_CALGARTH = [54.3900, -2.9300];
 
 // ------------------------------------------------------------
-// SAFE DAY ROUTES (NO PASSES)
+// DAY ROUTES
 // ------------------------------------------------------------
 
 // DAY 1 — Selside → Kendal → Bowness → Selside
@@ -346,7 +539,9 @@ roadRoute([
   HOME_SELSIDE
 ], "Day 2");
 
-// DAY 3 — Aira → Rydal → Castlerigg → Keswick → Derwentwater → Keswick
+// DAY 3 — TWO OPTIONS (BOTH SAFE, BOTH CYAN)
+
+// OPTION A — Full Scenic Loop (solid)
 roadRoute([
   [54.580, -2.950], // Aira Force Waterfall
   [54.448, -2.996], // Rydal Cave
@@ -355,6 +550,16 @@ roadRoute([
   [54.595, -3.147], // Derwentwater Lakeshore
   HOME_KESWICK
 ], "Day 3");
+
+// OPTION B — Shorter / Flexible Loop (dashed)
+roadRoute([
+  [54.580, -2.950], // Aira Force Waterfall
+  [54.602, -3.098], // Castlerigg Stone Circle
+  [54.600, -3.135], // Keswick Town Centre
+  [54.595, -3.147], // Derwentwater Lakeshore
+  [54.448, -2.996], // Rydal Cave
+  HOME_KESWICK
+], "Day 3", true);
 
 // DAY 4 — Keswick → Braithwaite → Lorton → Buttermere → Lorton → A66/A595 → Wasdale → Wastwater → Calgarth
 roadRoute([
@@ -399,21 +604,21 @@ function drawDangerRoad(name, waypoints) {
 
 // HONISTER PASS
 drawDangerRoad("Honister Pass", [
-  [54.543, -3.280],  // Gatesgarth / Buttermere side
+  [54.543, -3.280],
   [54.528, -3.262],
   [54.525, -3.230],
-  [54.525, -3.195],  // Summit
+  [54.525, -3.195],
   [54.520, -3.170],
-  [54.515, -3.159]   // Seatoller side
+  [54.515, -3.159]
 ]);
 
 // NEWLANDS PASS
 drawDangerRoad("Newlands Pass", [
-  [54.543, -3.280],  // Buttermere side
-  [54.556, -3.236],  // Newlands Hause
+  [54.543, -3.280],
+  [54.556, -3.236],
   [54.565, -3.210],
   [54.582, -3.200],
-  [54.602, -3.256]   // Braithwaite side
+  [54.602, -3.256]
 ]);
 
 // HARDKNOTT PASS
