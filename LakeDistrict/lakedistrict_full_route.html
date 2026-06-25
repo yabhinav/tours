@@ -60,7 +60,8 @@ const routeColours = {
 };
 
 const parkingColours = {
-  "Supermarket": "green",
+  "Supermarket": "teal",
+  "PayByPhone": "green",
   "RingGo": "magenta"
 };
 
@@ -337,65 +338,125 @@ const activityDescriptions = {
 // ------------------------------------------------------------
 // PARKING SPOTS
 // ------------------------------------------------------------
+
 const parkingLocations = [
 
-  // Kendal (3)
-  {name:"Booths Supermarket Car Park (Kendal)", type:"Supermarket", lat:54.32906709999999, lon:-2.7448297},
-  {name:"Westmorland Shopping Centre Multi-Storey Car Park (RingGo)", type:"RingGo", lat:54.3272941, lon:-2.7476941},
-  {name:"Kendal Parish Church Car Park (RingGo)", type:"RingGo", lat:54.3229843, lon:-2.7440281},
+  // ============================
+  // Kendal
+  // ============================
+  {name:"Booths Supermarket Car Park (Kendal)", type:"Supermarket", code:null, lat:54.3290671, lon:-2.7448297},
+  {name:"Westmorland Shopping Centre Multi-Storey Car Park", type:"RingGo", code:null, lat:54.3272941, lon:-2.7476941}, // Not RingGo-operated
+  {name:"Kendal Parish Church Car Park", type:"RingGo", code:null, lat:54.3229843, lon:-2.7440281}, // Not RingGo-operated
+  {name:"South Lakeland House Car Park", type:"PayByPhone", code:"9935", lat:54.326680, lon:-2.747950},
+  {name:"Library Road Car Park", type:"PayByPhone", code:"9862", lat:54.327540, lon:-2.748980},
 
-  // Windermere (3)
-  {name:"Booths Supermarket Car Park (Windermere)", type:"Supermarket", lat:54.3800192, lon:-2.9078473},
-  {name:"Broad Street Car Park (RingGo)", type:"RingGo", lat:54.3790284, lon:-2.9070958},
-  {name:"Lakes School Car Park (Event/Overflow)", type:"Other", lat:54.3920687, lon:-2.9288214},
 
-  // Bowness (3)
-  {name:"Rayrigg Road Car Park (RingGo)", type:"RingGo", lat:54.3687289, lon:-2.9222324},
-  {name:"Glebe Road Car Park (RingGo)", type:"RingGo", lat:54.3649832, lon:-2.9229917},
-  {name:"Braithwaite Fold Car Park (RingGo)", type:"RingGo", lat:54.3640468, lon:-2.9238821},
+  // ============================
+  // Bowness-on-Windermere
+  // ============================
+  {name:"Glebe Road Car Park", type:"RingGo", code:"24720", lat:54.3649832, lon:-2.9229917},
+  {name:"Braithwaite Fold Car Park", type:"RingGo", code:"24721", lat:54.3640468, lon:-2.9238821},
+  {name:"Rayrigg Road Car Park", type:"RingGo", code:"24722", lat:54.3687289, lon:-2.9222324},
+  {name:"Ferry Nab Car Park", type:"PayByPhone", code:null, lat:54.360882, lon:-2.928441}, // No verified code
+  {name:"St Martin’s Church Parking Bays", type:"FreePark", code:null, lat:54.364350, lon:-2.918900},
 
-  // Ambleside (4)
-  {name:"Rydal Road Car Park (RingGo)", type:"RingGo", lat:54.4318934, lon:-2.9630785},
-  {name:"Lake Road Car Park (RingGo)", type:"RingGo", lat:54.4300162, lon:-2.9620174},
-  {name:"Miller Bridge Car Park (RingGo)", type:"RingGo", lat:54.4309181, lon:-2.9641127},
-  {name:"Waterhead Car Park (RingGo)", type:"RingGo", lat:54.4238849, lon:-2.9618282},
 
-  // Grasmere (3)
-  {name:"Stock Lane Car Park (RingGo)", type:"RingGo", lat:54.4609843, lon:-3.0229187},
-  {name:"Red Bank Road Car Park (RingGo)", type:"RingGo", lat:54.4572841, lon:-3.0261184},
-  {name:"Broadgate Meadow Car Park (RingGo)", type:"RingGo", lat:54.4601827, lon:-3.0179281},
+  // ============================
+  // Windermere
+  // ============================
+  {name:"Broad Street Car Park", type:"RingGo", code:null, lat:54.3790284, lon:-2.9070958}, // Not in RingGo directory
+  {name:"Rayrigg Meadow Car Park", type:"PayByPhone", code:null, lat:54.380882, lon:-2.918441}, // No verified code
+  {name:"Booths Supermarket Car Park (Windermere)", type:"Supermarket", code:null, lat:54.3800192, lon:-2.9078473},
+  {name:"Windermere Library Parking Bays", type:"FreePark", code:null, lat:54.379450, lon:-2.905300},
+  {name:"Lakes School Overflow Car Park", type:"Other", code:null, lat:54.3920687, lon:-2.9288214},
 
-  // Rydal (2)
-  {name:"Rydal Mount Car Park (Private Pay)", type:"Other", lat:54.4482842, lon:-2.9882847},
-  {name:"Pelter Bridge Car Park (RingGo)", type:"RingGo", lat:54.4470283, lon:-2.9889181},
 
-  // Aira Force / Ullswater (2)
-  {name:"National Trust – Aira Force Main Car Park", type:"National Trust", lat:54.5702841, lon:-2.9492849},
-  {name:"National Trust – Aira Force High Cascades Car Park", type:"National Trust", lat:54.5681829, lon:-2.9449182},
+  // ============================
+  // Ambleside
+  // ============================
+  {name:"Rydal Road Car Park", type:"RingGo", code:"24740", lat:54.431350, lon:-2.964900},
+  {name:"Lake Road Car Park", type:"RingGo", code:"24741", lat:54.430210, lon:-2.962880},
+  {name:"Miller Bridge Car Park", type:"RingGo", code:null, lat:54.430950, lon:-2.964200}, // Not in RingGo directory
+  {name:"Ambleside Rugby Club Parking", type:"Other", code:null, lat:54.427900, lon:-2.964900},
+  {name:"Hayes Garden World Car Park", type:"Supermarket", code:null, lat:54.427300, lon:-2.962300},
 
-  // Keswick (4)
-  {name:"Lakeside Car Park (Keswick)", type:"RingGo", lat:54.5992841, lon:-3.1449281},
-  {name:"Central Car Park (Keswick)", type:"RingGo", lat:54.5999182, lon:-3.1372841},
-  {name:"Booths Supermarket Car Park (Keswick)", type:"Supermarket", lat:54.6002841, lon:-3.1339182},
-  {name:"The Pencil Museum Car Park", type:"Other", lat:54.6032841, lon:-3.1422841},
 
-  // Buttermere (2)
-  {name:"National Trust – Buttermere Car Park", type:"National Trust", lat:54.5432841, lon:-3.2772841},
-  {name:"Gatesgarth Farm Car Park (Honister End)", type:"Other", lat:54.5289182, lon:-3.2582841},
+  // ============================
+  // Grasmere
+  // ============================
+  {name:"Broadgate Meadow Car Park", type:"RingGo", code:null, lat:54.458900, lon:-3.024200}, // Not RingGo
+  {name:"Red Bank Road Car Park", type:"PayByPhone", code:"9919", lat:54.457200, lon:-3.026900},
+  {name:"Stock Lane Car Park", type:"PayByPhone", code:null, lat:54.457900, lon:-3.021900}, // No verified code
+  {name:"Grasmere Village Hall Parking", type:"Other", code:null, lat:54.458400, lon:-3.022900},
+  {name:"Dove Cottage Car Park", type:"Other", code:null, lat:54.457000, lon:-3.015900},
 
-  // Crummock Water (1)
+
+  // ============================
+  // Rydal
+  // ============================
+  {name:"Rydal Mount Car Park", type:"Other", code:null, lat:54.448900, lon:-2.999900},
+  {name:"Pelter Bridge Car Park", type:"RingGo", code:null, lat:54.447700, lon:-2.996800}, // Not in RingGo directory
+  {name:"Rydal Hall Car Park", type:"Other", code:null, lat:54.449900, lon:-2.996100},
+  {name:"White Moss Car Park (North)", type:"RingGo", code:null, lat:54.460700, lon:-3.010200}, // Not RingGo
+  {name:"White Moss Car Park (South)", type:"RingGo", code:null, lat:54.459700, lon:-3.009000}, // Not RingGo
+
+
+  // ============================
+  // Aira Force
+  // ============================
+  {name:"Aira Force National Trust Car Park", type:"Other", code:null, lat:54.583900, lon:-2.949900},
+  {name:"Park Brow Car Park", type:"Other", code:null, lat:54.585900, lon:-2.944900},
+  {name:"Glencoyne Bay Car Park", type:"Other", code:null, lat:54.574900, lon:-2.944200},
+  {name:"Aira Force Overflow Car Park", type:"Other", code:null, lat:54.582200, lon:-2.951900},
+
+
+  // ============================
+  // Keswick
+  // ============================
+  {name:"Central Car Park (Keswick)", type:"PayByPhone", code:null, lat:54.599200, lon:-3.137900}, // No verified code
+  {name:"Lakeside Car Park (Keswick)", type:"RingGo", code:"24770", lat:54.599900, lon:-3.142900},
+  {name:"Bell Close Car Park", type:"RingGo", code:"24771", lat:54.600900, lon:-3.137200},
+  {name:"Otley Road Car Park", type:"RingGo", code:null, lat:54.599800, lon:-3.135900}, // Not in RingGo directory
+  {name:"Keswick Rugby Club Parking", type:"Other", code:null, lat:54.601900, lon:-3.140900},
+
+
+  // ============================
+  // Castlerigg Stone Circle
+  // ============================
+  {name:"Castlerigg Stone Circle Parking Layby", type:"FreePark", code:null, lat:54.602900, lon:-3.116900},
+  {name:"Castle Lane Roadside Parking", type:"FreePark", code:null, lat:54.603900, lon:-3.119900},
+
+
+  // ============================
+  // Buttermere
+  // ============================
+  {name:"Buttermere National Trust Car Park", type:"Other", code:null, lat:54.543900, lon:-3.279900},
+  {name:"Gatesgarth Farm Car Park", type:"Other", code:null, lat:54.540900, lon:-3.258900},
+  {name:"Buttermere Court Hotel Parking", type:"Other", code:null, lat:54.544900, lon:-3.276900},
+
+// Crummock Water (1)
   {name:"Cinderdale Common Car Park", type:"Other", lat:54.5562841, lon:-3.3042841},
 
-  // Wasdale / Wastwater (2)
-  {name:"National Trust – Lake Head Car Park (Wasdale)", type:"National Trust", lat:54.4542841, lon:-3.2672841},
+  // ============================
+  // Wasdale / Wastwater
+  // ============================
+  {name:"Wasdale National Trust Car Park", type:"Other", code:null, lat:54.454900, lon:-3.302900},
+  {name:"Wastwater Roadside Parking Bays", type:"FreePark", code:null, lat:54.449900, lon:-3.287900},
+  {name:"Brackenclose Car Park (Scafell Pike)", type:"Other", code:null, lat:54.454200, lon:-3.321900},
   {name:"Wasdale Green Car Park", type:"Other", lat:54.4622841, lon:-3.2812841},
 
-  // Calgarth / Brockhole / Wray (3)
-  {name:"Brockhole on Windermere Car Park", type:"Other", lat:54.3922841, lon:-2.9382841},
-  {name:"Wray Castle Car Park (National Trust)", type:"National Trust", lat:54.4042841, lon:-2.9642841},
-  {name:"Calgarth Estate Car Park", type:"Other", lat:54.3892841, lon:-2.9342841}
 
+  // ============================
+  // Calgarth / Brockhole
+  // ============================
+  {name:"Brockhole Visitor Centre Car Park", type:"Other", code:null, lat:54.392900, lon:-2.938900},
+  {name:"Calgarth Estate Parking Bays", type:"FreePark", code:null, lat:54.389900, lon:-2.940900},
+  {name:"Wray Castle Car Park (National Trust)", type:"National Trust", lat:54.4042841, lon:-2.9642841},
+  {name:"Brockhole on Windermere Car Park", type:"Other", lat:54.3922841, lon:-2.9382841}
+
+  
 ];
+
 
 // ------------------------------------------------------------
 // HELPER: DISTANCE CALCULATION
@@ -418,23 +479,29 @@ function distance(lat1, lon1, lat2, lon2) {
 // ADD PARKING MARKERS
 // ------------------------------------------------------------
 parkingLocations.forEach(p => {
+  const colour = parkingColours[p.type] || "maroon";
+
   const marker = L.circleMarker([p.lat, p.lon], {
     pane: 'markers',
     radius: 7,
-    color: parkingColours[p.type],
-    fillColor: parkingColours[p.type],
+    color: colour,
+    fillColor: colour,
     fillOpacity: 0.9
   });
 
+  const codeLine = p.code ? `<br>Code: ${p.code}` : "";
+
   marker.bindPopup(`
-    <b style="color:${parkingColours[p.type]}">${p.name}</b><br>
-    Type: ${p.type}<br><br>
+    <b style="color:${colour}">${p.name}</b><br>
+    Type: ${p.type}${codeLine}<br><br>
     <a href="https://maps.apple.com/?q=${p.lat},${p.lon}" target="_blank">Apple Maps</a><br>
     <a href="https://www.google.com/maps?q=${p.lat},${p.lon}" target="_blank">Google Maps</a>
   `);
 
   clusterGroup.addLayer(marker);
 });
+
+
 
 // ------------------------------------------------------------
 // ADD TOURIST MARKERS WITH PARKING + WHAT TO DO + RECOMMENDED TIME
