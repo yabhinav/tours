@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>NC500 Trip Map – 4 Days / 3 Nights</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Routing Machine -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+<!-- MarkerCluster -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<style>
+  #map { height: 100vh; }
+  .leaflet-routing-container { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+// ------------------------------------------------------------
+// MAP INITIALISATION
+// ------------------------------------------------------------
+const map = L.map('map').setView([58.0, -4.4], 7);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19
+}).addTo(map);
+
+map.createPane('markers');
+map.getPane('markers').style.zIndex = 650;
+
+// ------------------------------------------------------------
+// COLOR SCHEME
+// ------------------------------------------------------------
+const dayColours = {
+  "Day 1": "red",
+  "Day 2": "green",
+  "Day 3": "blue",
+  "Day 4": "purple"
+};
+
+const routeColours = {
+  "Day 1": "red",
+  "Day 2": "green",
+  "Day 3": "blue",
+  "Day 4": "purple"
+};
+
+// ------------------------------------------------------------
+// ICON HELPERS
+// ------------------------------------------------------------
+function pinIcon(color) {
+  return L.icon({
+    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
+}
+
+// ------------------------------------------------------------
+// MARKER CLUSTER
+// ------------------------------------------------------------
+const clusterGroup = L.markerClusterGroup();
+map.addLayer(clusterGroup);
+
+// ------------------------------------------------------------
+// NIGHT STOPS
+// ------------------------------------------------------------
+const nightStops = [
+  {
+    name: "Night 1 – John O’Groats",
+    lat: 58.6439, lon: -3.0686,
+    apple: "https://maps.apple.com/?q=John+O'Groats",
+    google: "https://www.google.com/maps?q=John+O'Groats",
+    notes: "Great for sunset at Duncansby Head."
+  },
+  {
+    name: "Night 2 – Tongue",
+    lat: 58.4840, lon: -4.4160,
+    apple: "https://maps.apple.com/?q=Tongue+Scotland",
+    google: "https://www.google.com/maps?q=Tongue+Scotland",
+    notes: "Castle Varrich is a perfect short hike."
+  },
+  {
+    name: "Night 3 – Ullapool",
+    lat: 57.8987, lon: -5.1604,
+    apple: "https://maps.apple.com/?q=Ullapool+Scotland",
+    google: "https://www.google.com/maps?q=Ullapool+Scotland",
+    notes: "Great food, harbour walk, easy final day."
+  }
+];
+
+nightStops.forEach(stop => {
+  const marker = L.marker([stop.lat, stop.lon], {
+    icon: pinIcon("yellow"),
+    pane: 'markers'
+  });
+
+  marker.bindPopup(`
+    <b>${stop.name}</b><br>
+    ${stop.notes}<br><br>
+    <a href="${stop.apple}" target="_blank">Apple Maps</a><br>
+    <a href="${stop.google}" target="_blank">Google Maps</a>
+  `);
+
+  clusterGroup.addLayer(marker);
+});
+
+// ------------------------------------------------------------
+// SCENIC STOPS WITH TIME SPENT + RECOMMENDATIONS
+// ------------------------------------------------------------
+const scenicStops = [
+  // Day 1
+  {
+    day: "Day 1", name: "Dunbeath Harbour",
+    lat: 58.249, lon: -3.439,
+    apple: "https://maps.apple.com/?q=Dunbeath+Harbour",
+    google: "https://www.google.com/maps?q=Dunbeath+Harbour",
+    time: "10–15 min",
+    rec: "Quick leg stretch and photos."
+  },
+  {
+    day: "Day 1", name: "Wick Harbour",
+    lat: 58.439, lon: -3.093,
+    apple: "https://maps.apple.com/?q=Wick+Harbour",
+    google: "https://www.google.com/maps?q=Wick+Harbour",
+    time: "15–20 min",
+    rec: "Coffee stop and harbour walk."
+  },
+  {
+    day: "Day 1", name: "Duncansby Head",
+    lat: 58.646, lon: -3.033,
+    apple: "https://maps.apple.com/?q=Duncansby+Head",
+    google: "https://www.google.com/maps?q=Duncansby+Head",
+    time: "30–45 min",
+    rec: "Walk to the sea stacks if time allows."
+  },
+
+  // Day 2
+  {
+    day: "Day 2", name: "Dunnet Head",
+    lat: 58.671, lon: -3.376,
+    apple: "https://maps.apple.com/?q=Dunnet+Head",
+    google: "https://www.google.com/maps?q=Dunnet+Head",
+    time: "20–30 min",
+    rec: "Most northerly point of mainland UK."
+  },
+  {
+    day: "Day 2", name: "Strathy Point",
+    lat: 58.564, lon: -4.009,
+    apple: "https://maps.apple.com/?q=Strathy+Point",
+    google: "https://www.google.com/maps?q=Strathy+Point",
+    time: "45–60 min",
+    rec: "Short walk to dramatic cliffs."
+  },
+  {
+    day: "Day 2", name: "Farr Beach",
+    lat: 58.553, lon: -4.233,
+    apple: "https://maps.apple.com/?q=Farr+Beach",
+    google: "https://www.google.com/maps?q=Farr+Beach",
+    time: "20–30 min",
+    rec: "Golden sand, quiet and beautiful."
+  },
+  {
+    day: "Day 2", name: "Kyle of Tongue Causeway",
+    lat: 58.486, lon: -4.416,
+    apple: "https://maps.apple.com/?q=Kyle+of+Tongue",
+    google: "https://www.google.com/maps?q=Kyle+of+Tongue",
+    time: "10 min",
+    rec: "Iconic NC500 photo stop."
+  },
+
+  // Day 3
+  {
+    day: "Day 3", name: "Loch Loyal",
+    lat: 58.383, lon: -4.4,
+    apple: "https://maps.apple.com/?q=Loch+Loyal",
+    google: "https://www.google.com/maps?q=Loch+Loyal",
+    time: "10–15 min",
+    rec: "Atmospheric loch viewpoint."
+  },
+  {
+    day: "Day 3", name: "Ardvreck Castle",
+    lat: 58.161, lon: -4.969,
+    apple: "https://maps.apple.com/?q=Ardvreck+Castle",
+    google: "https://www.google.com/maps?q=Ardvreck+Castle",
+    time: "20–30 min",
+    rec: "Ruins on Loch Assynt — great photos."
+  },
+  {
+    day: "Day 3", name: "Knockan Crag",
+    lat: 57.919, lon: -4.969,
+    apple: "https://maps.apple.com/?q=Knockan+Crag",
+    google: "https://www.google.com/maps?q=Knockan+Crag",
+    time: "20–30 min",
+    rec: "Short geology trail and viewpoint."
+  },
+  {
+    day: "Day 3", name: "Ullapool Harbour",
+    lat: 57.8987, lon: -5.1604,
+    apple: "https://maps.apple.com/?q=Ullapool+Harbour",
+    google: "https://www.google.com/maps?q=Ullapool+Harbour",
+    time: "30–45 min",
+    rec: "Walk the harbour, grab food."
+  },
+
+  // Day 4
+  {
+    day: "Day 4", name: "Corrieshalloch Gorge",
+    lat: 57.810, lon: -5.058,
+    apple: "https://maps.apple.com/?q=Corrieshalloch+Gorge",
+    google: "https://www.google.com/maps?q=Corrieshalloch+Gorge",
+    time: "20–30 min",
+    rec: "Short walk to suspension bridge."
+  },
+  {
+    day: "Day 4", name: "Garve",
+    lat: 57.613, lon: -4.676,
+    apple: "https://maps.apple.com/?q=Garve",
+    google: "https://www.google.com/maps?q=Garve",
+    time: "10–15 min",
+    rec: "Quick viewpoint stop."
+  }
+];
+
+scenicStops.forEach(stop => {
+  const marker = L.marker([stop.lat, stop.lon], {
+    icon: pinIcon(dayColours[stop.day]),
+    pane: 'markers'
+  });
+
+  marker.bindPopup(`
+    <b style="color:${dayColours[stop.day]}">${stop.day}</b><br>
+    <b>${stop.name}</b><br><br>
+    <b>Recommended time:</b> ${stop.time}<br>
+    <b>Notes:</b> ${stop.rec}<br><br>
+    <a href="${stop.apple}" target="_blank">Apple Maps</a><br>
+    <a href="${stop.google}" target="_blank">Google Maps</a>
+  `);
+
+  clusterGroup.addLayer(marker);
+});
+
+// ------------------------------------------------------------
+// ROUTES WITH TRAVEL TIMES
+// ------------------------------------------------------------
+function drawRoute(day, points, travelTime) {
+  L.Routing.control({
+    waypoints: points.map(p => L.latLng(p[0], p[1])),
+    lineOptions: {
+      styles: [{
+        color: routeColours[day],
+        weight: 5,
+        opacity: 0.9
+      }]
+    },
+    addWaypoints: false,
+    draggableWaypoints: false,
+    fitSelectedRoutes: false,
+    show: false,
+    routeWhileDragging: false,
+    createMarker: () => null
+  }).addTo(map);
+
+  // Add midpoint marker with travel time
+  const mid = points[Math.floor(points.length / 2)];
+  const marker = L.marker(mid, {
+    icon: pinIcon(routeColours[day]),
+    pane: 'markers'
+  });
+
+  marker.bindPopup(`
+    <b style="color:${routeColours[day]}">${day} Travel Time</b><br>
+    ${travelTime}
+  `);
+
+  clusterGroup.addLayer(marker);
+}
+
+// Day 1 – Inverness → John O’Groats
+drawRoute("Day 1", [
+  [57.542, -4.047],
+  [58.6439, -3.0686]
+], "Approx. 2 hr 15 min");
+
+// Day 2 – John O’Groats → Tongue
+drawRoute("Day 2", [
+  [58.6439, -3.0686],
+  [58.4840, -4.4160]
+], "Approx. 2 hr 30 min");
+
+// Day 3 – Tongue → Ullapool
+drawRoute("Day 3", [
+  [58.4840, -4.4160],
+  [57.8987, -5.1604]
+], "Approx. 2 hr 15 min");
+
+// Day 4 – Ullapool → Inverness Airport
+drawRoute("Day 4", [
+  [57.8987, -5.1604],
+  [57.542, -4.047]
+], "Approx. 1 hr 30 min");
+
+</script>
+
+</body>
+</html>
