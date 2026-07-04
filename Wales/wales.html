@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Wales Nature Trip Map – 4 Days / 3 Nights</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Routing Machine -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+<!-- MarkerCluster -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+<style>
+  #map { height: 100vh; }
+  .leaflet-routing-container { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+// ------------------------------------------------------------
+// MAP INITIALISATION
+// ------------------------------------------------------------
+const map = L.map('map').setView([52.7, -3.5], 7);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19
+}).addTo(map);
+
+map.createPane('markers');
+map.getPane('markers').style.zIndex = 650;
+
+// ------------------------------------------------------------
+// COLOR SCHEME
+// ------------------------------------------------------------
+const dayColours = {
+  "Day 1": "red",
+  "Day 2": "green",
+  "Day 3": "blue",
+  "Day 4": "purple"
+};
+
+const routeColours = {
+  "Day 1": "red",
+  "Day 2": "green",
+  "Day 3": "blue",
+  "Day 4": "purple"
+};
+
+// ------------------------------------------------------------
+// ICON HELPERS
+// ------------------------------------------------------------
+function pinIcon(color) {
+  return L.icon({
+    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
+}
+
+const clusterGroup = L.markerClusterGroup();
+map.addLayer(clusterGroup);
+
+// ------------------------------------------------------------
+// NIGHT STOPS
+// ------------------------------------------------------------
+const nightStops = [
+  {
+    name: "Night 1 – Betws-y-Coed (Snowdonia)",
+    lat: 53.092, lon: -3.801,
+    apple: "https://maps.apple.com/?q=Betws-y-Coed",
+    google: "https://www.google.com/maps?q=Betws-y-Coed",
+    notes: "Great base for lakes, waterfalls and mountain passes."
+  },
+  {
+    name: "Night 2 – St Davids (Pembrokeshire)",
+    lat: 51.882, lon: -5.268,
+    apple: "https://maps.apple.com/?q=St+Davids+Wales",
+    google: "https://www.google.com/maps?q=St+Davids+Wales",
+    notes: "Tiny city with dramatic coastline and sunset spots."
+  },
+  {
+    name: "Night 3 – Brecon (Brecon Beacons)",
+    lat: 51.947, lon: -3.391,
+    apple: "https://maps.apple.com/?q=Brecon+Wales",
+    google: "https://www.google.com/maps?q=Brecon+Wales",
+    notes: "Perfect base for Pen y Fan and waterfalls."
+  }
+];
+
+nightStops.forEach(stop => {
+  const marker = L.marker([stop.lat, stop.lon], {
+    icon: pinIcon("yellow"),
+    pane: 'markers'
+  });
+
+  marker.bindPopup(`
+    <b>${stop.name}</b><br>
+    ${stop.notes}<br><br>
+    <a href="${stop.apple}" target="_blank">Apple Maps</a><br>
+    <a href="${stop.google}" target="_blank">Google Maps</a>
+  `);
+
+  clusterGroup.addLayer(marker);
+});
+
+// ------------------------------------------------------------
+// SCENIC STOPS (FULL LIST)
+// ------------------------------------------------------------
+const scenicStops = [
+  // Day 1 – Milton Keynes → Snowdonia
+  {
+    day: "Day 1", name: "Llyn Ogwen",
+    lat: 53.140, lon: -3.997,
+    apple: "https://maps.apple.com/?q=Llyn+Ogwen",
+    google: "https://www.google.com/maps?q=Llyn+Ogwen",
+    time: "20–30 min",
+    rec: "Park by the lake, short walk and photos under Tryfan."
+  },
+  {
+    day: "Day 1", name: "Swallow Falls",
+    lat: 53.102, lon: -3.825,
+    apple: "https://maps.apple.com/?q=Swallow+Falls+Betws-y-Coed",
+    google: "https://www.google.com/maps?q=Swallow+Falls+Betws-y-Coed",
+    time: "20–30 min",
+    rec: "Easy access viewpoint, small fee, powerful waterfall."
+  },
+  {
+    day: "Day 1", name: "Capel Curig Viewpoint",
+    lat: 53.102, lon: -3.900,
+    apple: "https://maps.apple.com/?q=Capel+Curig",
+    google: "https://www.google.com/maps?q=Capel+Curig",
+    time: "10–15 min",
+    rec: "Classic Snowdonia panorama over Moel Siabod and the Glyderau."
+  },
+  {
+    day: "Day 1", name: "Llyn Llydaw (Miners Track start)",
+    lat: 53.077, lon: -4.017,
+    apple: "https://maps.apple.com/?q=Pen-y-Pass+Car+Park",
+    google: "https://www.google.com/maps?q=Pen-y-Pass+Car+Park",
+    time: "60–120 min",
+    rec: "Walk part of the Miners Track towards Llyn Llydaw for mountain lake views."
+  },
+
+  // Day 2 – Snowdonia → Pembrokeshire
+  {
+    day: "Day 2", name: "Beddgelert Village",
+    lat: 53.016, lon: -4.102,
+    apple: "https://maps.apple.com/?q=Beddgelert",
+    google: "https://www.google.com/maps?q=Beddgelert",
+    time: "30–45 min",
+    rec: "Riverside walk, stone bridge, very photogenic village."
+  },
+  {
+    day: "Day 2", name: "Aberglaslyn Pass",
+    lat: 53.004, lon: -4.111,
+    apple: "https://maps.apple.com/?q=Aberglaslyn+Pass",
+    google: "https://www.google.com/maps?q=Aberglaslyn+Pass",
+    time: "30–45 min",
+    rec: "Short gorge walk along the river, dramatic scenery."
+  },
+  {
+    day: "Day 2", name: "Harlech Beach",
+    lat: 52.859, lon: -4.110,
+    apple: "https://maps.apple.com/?q=Harlech+Beach",
+    google: "https://www.google.com/maps?q=Harlech+Beach",
+    time: "30–60 min",
+    rec: "Huge sandy beach with dunes and views back to Snowdonia."
+  },
+  {
+    day: "Day 2", name: "Newgale Beach",
+    lat: 51.839, lon: -5.145,
+    apple: "https://maps.apple.com/?q=Newgale+Beach",
+    google: "https://www.google.com/maps?q=Newgale+Beach",
+    time: "20–40 min",
+    rec: "Long surf beach, great for a leg stretch and sea air."
+  },
+  {
+    day: "Day 2", name: "St Davids Cathedral",
+    lat: 51.882, lon: -5.268,
+    apple: "https://maps.apple.com/?q=St+Davids+Cathedral",
+    google: "https://www.google.com/maps?q=St+Davids+Cathedral",
+    time: "30–45 min",
+    rec: "Historic cathedral in a tiny city, peaceful cloisters."
+  },
+  {
+    day: "Day 2", name: "St Davids Head (sunset)",
+    lat: 51.900, lon: -5.300,
+    apple: "https://maps.apple.com/?q=St+Davids+Head",
+    google: "https://www.google.com/maps?q=St+Davids+Head",
+    time: "60–90 min",
+    rec: "Coastal headland walk, ideal for sunset over cliffs and sea."
+  },
+
+  // Day 3 – Pembrokeshire → Brecon Beacons
+  {
+    day: "Day 3", name: "Solva Harbour",
+    lat: 51.874, lon: -5.188,
+    apple: "https://maps.apple.com/?q=Solva+Harbour",
+    google: "https://www.google.com/maps?q=Solva+Harbour",
+    time: "20–30 min",
+    rec: "Colourful harbour village, short walk along the quay."
+  },
+  {
+    day: "Day 3", name: "Blue Lagoon (Abereiddy)",
+    lat: 51.939, lon: -5.215,
+    apple: "https://maps.apple.com/?q=Abereiddy+Blue+Lagoon",
+    google: "https://www.google.com/maps?q=Abereiddy+Blue+Lagoon",
+    time: "30–60 min",
+    rec: "Old quarry filled with vivid blue water, dramatic cliffs."
+  },
+  {
+    day: "Day 3", name: "Strumble Head Lighthouse",
+    lat: 52.013, lon: -5.192,
+    apple: "https://maps.apple.com/?q=Strumble+Head+Lighthouse",
+    google: "https://www.google.com/maps?q=Strumble+Head+Lighthouse",
+    time: "30–45 min",
+    rec: "Wild coastal viewpoint, good for spotting seabirds and maybe dolphins."
+  },
+  {
+    day: "Day 3", name: "Pen y Fan (sunset optional)",
+    lat: 51.883, lon: -3.436,
+    apple: "https://maps.apple.com/?q=Pen+y+Fan+Car+Park",
+    google: "https://www.google.com/maps?q=Pen+y+Fan+Car+Park",
+    time: "120–150 min",
+    rec: "Popular summit hike; choose good weather and allow plenty of time."
+  },
+
+  // Day 4 – Brecon Beacons → Milton Keynes
+  {
+    day: "Day 4", name: "Four Waterfalls Walk area",
+    lat: 51.802, lon: -3.541,
+    apple: "https://maps.apple.com/?q=Four+Waterfalls+Walk+Car+Park",
+    google: "https://www.google.com/maps?q=Four+Waterfalls+Walk+Car+Park",
+    time: "90–150 min",
+    rec: "Pick 1–2 waterfalls for a manageable loop; paths can be muddy."
+  },
+  {
+    day: "Day 4", name: "Brecon Canal Basin",
+    lat: 51.948, lon: -3.392,
+    apple: "https://maps.apple.com/?q=Brecon+Canal+Basin",
+    google: "https://www.google.com/maps?q=Brecon+Canal+Basin",
+    time: "20–30 min",
+    rec: "Gentle canal-side stroll before the drive home."
+  },
+  {
+    day: "Day 4", name: "Hay Bluff Viewpoint",
+    lat: 52.041, lon: -3.090,
+    apple: "https://maps.apple.com/?q=Hay+Bluff",
+    google: "https://www.google.com/maps?q=Hay+Bluff",
+    time: "20–40 min",
+    rec: "High viewpoint over the Wye Valley; short walk from parking."
+  }
+];
+
+scenicStops.forEach(stop => {
+  const marker = L.marker([stop.lat, stop.lon], {
+    icon: pinIcon(dayColours[stop.day]),
+    pane: 'markers'
+  });
+
+  marker.bindPopup(`
+    <b style="color:${dayColours[stop.day]}">${stop.day}</b><br>
+    <b>${stop.name}</b><br><br>
+    <b>Recommended time:</b> ${stop.time}<br>
+    <b>Notes:</b> ${stop.rec}<br><br>
+    <a href="${stop.apple}" target="_blank">Apple Maps</a><br>
+    <a href="${stop.google}" target="_blank">Google Maps</a>
+  `);
+
+  clusterGroup.addLayer(marker);
+});
+
+// ------------------------------------------------------------
+// ROUTES WITH TRAVEL TIMES
+// ------------------------------------------------------------
+function drawRoute(day, points, travelTime, label) {
+  L.Routing.control({
+    waypoints: points.map(p => L.latLng(p[0], p[1])),
+    lineOptions: {
+      styles: [{
+        color: routeColours[day],
+        weight: 5,
+        opacity: 0.9
+      }]
+    },
+    addWaypoints: false,
+    draggableWaypoints: false,
+    fitSelectedRoutes: false,
+    show: false,
+    routeWhileDragging: false,
+    createMarker: () => null
+  }).addTo(map);
+
+  const mid = points[Math.floor(points.length / 2)];
+  const marker = L.marker(mid, {
+    icon: pinIcon(routeColours[day]),
+    pane: 'markers'
+  });
+
+  marker.bindPopup(`
+    <b style="color:${routeColours[day]}">${day} – ${label}</b><br>
+    <b>Approx. drive time:</b> ${travelTime}<br>
+    <b>Tip:</b> Allow extra buffer for stops and traffic.
+  `);
+
+  clusterGroup.addLayer(marker);
+}
+
+// Day 1 – Milton Keynes → Betws-y-Coed
+drawRoute("Day 1", [
+  [52.040, -0.759],   // Milton Keynes
+  [53.092, -3.801]    // Betws-y-Coed
+], "Approx. 3 hr 30 min", "Milton Keynes → Snowdonia");
+
+// Day 2 – Betws-y-Coed → St Davids
+drawRoute("Day 2", [
+  [53.092, -3.801],   // Betws-y-Coed
+  [51.882, -5.268]    // St Davids
+], "Approx. 3 hr 15 min", "Snowdonia → Pembrokeshire");
+
+// Day 3 – St Davids → Brecon
+drawRoute("Day 3", [
+  [51.882, -5.268],   // St Davids
+  [51.947, -3.391]    // Brecon
+], "Approx. 2 hr 15 min", "Pembrokeshire → Brecon Beacons");
+
+// Day 4 – Brecon → Milton Keynes
+drawRoute("Day 4", [
+  [51.947, -3.391],   // Brecon
+  [52.040, -0.759]    // Milton Keynes
+], "Approx. 3 hr 15 min", "Brecon Beacons → Milton Keynes");
+
+</script>
+
+</body>
+</html>
